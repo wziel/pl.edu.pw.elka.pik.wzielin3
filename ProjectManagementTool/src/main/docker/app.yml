@@ -1,0 +1,15 @@
+version: '2'
+services:
+    projectmanagementtool-app:
+        image: projectmanagementtool
+        external_links:
+            - projectmanagementtool-mysql:mysql
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/projectmanagementtool?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - 8080:8080
+    projectmanagementtool-mysql:
+        extends:
+            file: mysql.yml
+            service: projectmanagementtool-mysql

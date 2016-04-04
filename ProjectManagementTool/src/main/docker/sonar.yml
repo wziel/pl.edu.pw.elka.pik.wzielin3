@@ -1,0 +1,8 @@
+version: '2'
+services:
+    projectmanagementtool-sonar:
+        container_name: projectmanagementtool-sonar
+        image: sonarqube:5.3
+        ports:
+            - 9000:9000
+            - 9092:9092

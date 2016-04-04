@@ -1,0 +1,24 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "3.0.0",
+    "baseName": "ProjectManagementTool",
+    "packageName": "pw.elka.pik.mkdev1",
+    "packageFolder": "pw/elka/pik/mkdev1",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "rememberMeKey": "2d36d3e6bdc6025860abfc909a4bb070c2d50ccf",
+    "useSass": false,
+    "applicationType": "monolith",
+    "testFrameworks": [],
+    "enableTranslation": false
+  }
+}
