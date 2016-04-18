@@ -1,0 +1,25 @@
+<div>
+
+    <h2>Your projects</h2>
+
+    <p>
+        <button type="button" class="btn btn-primary" ng-click="vm.refresh()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span>Refresh</span>
+        </button>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-12">Project Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="project in vm.projects">
+                <td><span class="text-capitalize">{{ project.name }}</span></td>
+                <td>
+					<a type="button" class="btn btn-primary" href="#">See details</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
