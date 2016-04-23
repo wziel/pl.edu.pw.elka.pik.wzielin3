@@ -24,11 +24,15 @@ public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @NotNull
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
     private String name;
+
+    @NotNull
+    @Column(nullable = false)
+    private Long membersCount;
 
 	public Long getId() {
 		return id;
@@ -46,4 +50,11 @@ public class Project implements Serializable {
 		this.name = name;
 	}
 
+    public Long getMembersCount() {
+        return membersCount;
+    }
+
+    public void setMembersCount(Long membersCount) {
+        this.membersCount = membersCount;
+    }
 }

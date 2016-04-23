@@ -17,7 +17,12 @@
             <tr ng-repeat="project in vm.projects">
                 <td><span class="text-capitalize">{{ project.name }}</span></td>
                 <td>
-					<a type="button" class="btn btn-primary" href="#">See details</a>
+                    <button type="submit"
+                            ui-sref="project-detail({name:project.name})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                        <span class="hidden-xs hidden-sm"></span>
+                    </button>
                 </td>
             </tr>
         </tbody>

@@ -6,6 +6,7 @@ import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.repository.UserRepository;
 import pw.elka.pik.mkdev1.service.MailService;
+import pw.elka.pik.mkdev1.service.ProjectService;
 import pw.elka.pik.mkdev1.web.rest.dto.ManagedUserDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
@@ -37,10 +38,13 @@ public class ProjectResource {
 
     @Inject
     private ProjectRepository projectRepository;
-    
+
+    @Inject
+    private ProjectService projectService;
+
     /**
      * GET  /projects : get all projects.
-     * 
+     *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and with body all projects
      * @throws URISyntaxException if the pagination headers couldnt be generated
@@ -58,5 +62,17 @@ public class ProjectResource {
             .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/projects");
         return new ResponseEntity<>(projectDTOs, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/projects/{name}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<ProjectDTO> getProject(@PathVariable String name){
+        log.debug("REST request to get Project : {}", name);
+        return projectService.getProjectByName(name)
+            .map(ProjectDTO::new)
+            .map(projectDTO -> new ResponseEntity<>(projectDTO, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

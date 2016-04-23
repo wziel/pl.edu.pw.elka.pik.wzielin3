@@ -5,20 +5,20 @@
         .module('projectManagementToolApp')
         .controller('ProjectsController', ProjectsController);
 
-    ProjectsController.$inject = ['Projects', 'paginationConstants'];
+    ProjectsController.$inject = ['Project', 'paginationConstants'];
 
-    function ProjectsController (Projects, paginationConstants) {
+    function ProjectsController (Project, paginationConstants) {
         var vm = this;
-        
+
         vm.loadAll = loadAll;
         vm.loadPage = loadPage;
         vm.page = 1;
         vm.projects = [];
 
         vm.loadAll();
-        
+
         function loadAll () {
-            Projects.query({page: vm.page - 1, size: paginationConstants.itemsPerPage}, function (result, headers) {
+            Project.query({page: vm.page - 1, size: paginationConstants.itemsPerPage}, function (result, headers) {
                 vm.projects = result;
             });
         }

@@ -22,6 +22,21 @@
                     controllerAs: 'vm'
                 }
             }
-        });
+        })
+            .state('project-detail', {
+                parent: 'entity',
+                url: '/projects/:name',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'ProjectManagementTool'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/projects/project-detail.html',
+                        controller: 'ProjectController',
+                        controllerAs: 'vm'
+                    }
+                }
+            });
     }
 })();
