@@ -38,8 +38,8 @@ public class Project implements Serializable {
     @ManyToMany
     @JoinTable(
         name = "jhi_user_project",
-        joinColumns = {@JoinColumn(name = "user_id")},
-        inverseJoinColumns = {@JoinColumn(name = "project_id")})
+        joinColumns = {@JoinColumn(name = "project_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User> users = new HashSet<>();
 
