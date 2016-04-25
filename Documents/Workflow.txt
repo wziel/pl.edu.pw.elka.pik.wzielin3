@@ -2,10 +2,10 @@ Instrukcja dodawania zmian do projektu.
 1. Wybieramy jedno z user stories w trello i przeciągamy je do kolumny In progress.
 2. Zmiany wprowadzamy w branchu związanym z daną funkcjonalnością, jeśli taki branch nie istnieje to tworzymy nowy - feature/nazwa_funkcjonalności
 3. Przy commitach podajemy nazwę taska w trello (np. Card #6)
-3. Po wprowadzeniu całej funkcjonalności (nie tylko częsci!), sprawdzamy czy branch buduje się
+4. Po wprowadzeniu całej funkcjonalności (nie tylko częsci!), sprawdzamy czy branch buduje się
 	1) w IDE
 	2) po wpisaniu w konsoli mvn clean install
 	3) na jenkinsie w folderze mkdev1 (job zostanie automatycznie stworzony dla każdego brancha)
 Dopiero jeśli branch bez błędów zbuduje się i przetestuje na jenkinsie, mergujemy go z masterem, a następnie budujemy branch master na jenkinsie.
-4. W trello przerzucamy taska do Done jeśli go skonczyliśmy, jeśli jeszcze nie, ale skonczyliśmy narazie nad nim pracować to przerzucamy go spowrotem do Ideas. W obu
+5. W trello przerzucamy taska do Done jeśli go skonczyliśmy, jeśli jeszcze nie, ale skonczyliśmy narazie nad nim pracować to przerzucamy go spowrotem do Ideas. W obu
 przypadkach wpisujemy w komentarzu przy tasku numery commitów i nazwę brancha który dotyczy tego taska.
