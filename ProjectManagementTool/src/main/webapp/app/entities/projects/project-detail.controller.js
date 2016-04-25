@@ -13,6 +13,7 @@
     function ProjectController ($stateParams, Project) {
         var vm = this;
 
+        vm.showUsers;
         vm.load = load;
         vm.project = {};
 
@@ -21,6 +22,9 @@
         function load (name) {
             Project.get({name: name}, function(result) {
                 vm.project = result;
+                //delete this after endpoint returns users with project
+                vm.project.users = [{name:"Michał Mudel"},{name:"Joanna Raczyńska"}]
+                //
             });
         }
     }
