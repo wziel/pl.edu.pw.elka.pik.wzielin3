@@ -28,7 +28,7 @@
                 url: '/projects/:name',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: 'ProjectManagementTool'
+                    pageTitle: 'Project Details'
                 },
                 views: {
                     'content@': {
