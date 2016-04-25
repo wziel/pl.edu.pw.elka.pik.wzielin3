@@ -75,4 +75,13 @@ public class ProjectResource {
             .map(projectDTO -> new ResponseEntity<>(projectDTO, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @RequestMapping(value = "/projects",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public void addNewProject(@PathVariable String name){
+        /// @TODO
+    }
+
 }
