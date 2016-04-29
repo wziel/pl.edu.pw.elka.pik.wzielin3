@@ -14,9 +14,17 @@ public class ProjectDTO {
     @Size(min = 1, max = 50)
     private String name;
 
-    @NotNull
     private Long membersCount;
 
+    public ProjectDTO(){
+        this.name = "";
+        this.membersCount = 1L;
+    }
+
+    public ProjectDTO(String name){
+        this.name = name;
+        this.membersCount = 1L;
+    }
 	public ProjectDTO(Project project) {
 		this(project.getName(), project.getMembersCount());
 	}

@@ -37,6 +37,33 @@
                         controllerAs: 'vm'
                     }
                 }
+            })
+            .state('projects.new', {
+                parent: 'projects',
+                url: '/new',
+                data: {
+                    authorities: ['ROLE_ADMIN']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/projects/projects-new-project-dialog.html',
+                        controller: 'ProjectsNewProjectDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {
+                                    name: null, membersCount: null
+                                };
+                            }
+                        }
+                    }).result.then(function() {
+                        $state.go('projects', null, { reload: true });
+                    }, function() {
+                        $state.go('projects');
+                    });
+                }]
             });
     }
 })();
