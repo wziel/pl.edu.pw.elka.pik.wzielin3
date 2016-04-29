@@ -80,8 +80,18 @@ public class ProjectResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public void addNewProject(@PathVariable String name){
-        /// @TODO
+    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
+        log.debug("REST request to save Project : {}", projectDTO);
+        if (projectRepository.findOneByName(projectDTO.getName()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("projectManagement", "projecexists", "Name of project already in use"))
+                .body(null);
+        } else {
+            Project newProject = projectService.createProject(projectDTO);
+            return ResponseEntity.created(new URI("/api/projects/" + newProject.getName()))
+                .headers(HeaderUtil.createAlert( "A project is created with identifier " + newProject.getName(), newProject.getName()))
+                .body(newProject);
+        }
     }
 
 }

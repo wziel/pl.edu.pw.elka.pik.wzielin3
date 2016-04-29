@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
+import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Transactional
 public class ProjectService {
 
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(ProjectService.class);
 
     @Inject
     private ProjectRepository projectRepository;
@@ -25,5 +26,14 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public Optional<Project> getProjectByName(String name) {
         return projectRepository.findOneByName(name);
+    }
+
+    public Project createProject(ProjectDTO projectDTO) {
+        Project project = new Project();
+        project.setName(projectDTO.getName());
+        project.setMembersCount(1L);
+        projectRepository.save(project);
+        log.debug("Created Information for project: {}", project);
+        return project;
     }
 }

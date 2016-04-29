@@ -27,5 +27,6 @@
             vm.page = page;
             vm.loadAll();
         }
+        
     }
 })();
