@@ -1,4 +1,4 @@
-Instrukcja dodawania zmian do projektu.
+﻿Instrukcja dodawania zmian do projektu.
 1. Wybieramy jedno z user stories w trello i przeciągamy je do kolumny In progress.
 2. Zmiany wprowadzamy w branchu związanym z daną funkcjonalnością, jeśli taki branch nie istnieje to tworzymy nowy - feature/nazwa_funkcjonalności
 3. Przy commitach podajemy nazwę taska w trello (np. Card #6)
@@ -10,4 +10,5 @@ Dopiero jeśli branch bez błędów zbuduje się i przetestuje na jenkinsie, mer
 5. W trello przerzucamy taska do Done jeśli go skonczyliśmy, jeśli jeszcze nie, ale skonczyliśmy narazie nad nim pracować to przerzucamy go spowrotem do Ideas. W obu
 przypadkach wpisujemy w komentarzu przy tasku numery commitów i nazwę brancha który dotyczy tego taska.
 6. @TODO uruchamianie testów integracyjnych tylko na jenkinsie
-7. @TODO deployment
+7. Jeśli budowanie mastera na jenkinsie powiedzie się, aplikacja budowana w profilu produkcyjnym deployowana jest na serwer pik07.
+Dostęp do niej możliwy jest na porcie 8085.
