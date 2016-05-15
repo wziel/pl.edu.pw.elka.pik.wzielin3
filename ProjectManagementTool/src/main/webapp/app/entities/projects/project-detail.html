@@ -29,20 +29,38 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Members</td>
+				<th>Members
+				</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="user in vm.project.users">
-				<td>
-					{{user}}
-				</td>
+				<td>{{user}}</td>
 			</tr>
 		</tbody>
 	</table>
 
-	<button type="submit" ui-sref="projects" class="btn btn-info">
-		<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>
-			Back</span>
-	</button>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Boards</th>
+			</tr>
+		</thead>
+	</table>
+	<div class="row">
+		<div ng-repeat="board in vm.project.boards"
+			class="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+			style="margin-bottom: 1em">
+			<button type="button" class="btn btn-primary col-xs-12">
+				<span>{{board}}</span>
+			</button>
+		</div>
+	</div>
+
+	<div>
+		<button type="submit" ui-sref="projects" class="btn btn-info">
+			<span class="glyphicon glyphicon-arrow-left"></span>&nbsp; <span>
+				Back </span>
+		</button>
+	</div>
 </div>
