@@ -12,3 +12,4 @@ przypadkach wpisujemy w komentarzu przy tasku numery commitów i nazwę brancha 
 6. @TODO uruchamianie testów integracyjnych tylko na jenkinsie
 7. Jeśli budowanie mastera na jenkinsie powiedzie się, aplikacja budowana w profilu produkcyjnym deployowana jest na serwer pik07.
 Dostęp do niej możliwy jest na porcie 8085.
+8. @TODO Code coverage.
