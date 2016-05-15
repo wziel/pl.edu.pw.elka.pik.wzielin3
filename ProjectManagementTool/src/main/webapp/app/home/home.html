@@ -1,40 +1,44 @@
 <div ng-cloak>
     <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-responsive img-rounded"></span>
+        <div class="col-md-3 hidden-xs hidden-sm">
+            <span class="home-image img-responsive img-rounded "></span>
         </div>
-        <div class="col-md-8">
-            <h1>Welcome, mmudel and wzielin3 !</h1>
-            <p class="lead">This is your homepage</p>
-
+        <div class="col-md-9 col-xs-12 col-sm-12">
+            <h1>Welcome to Project Management Tool!</h1>
+			<p class="lead">
+			If you're looking for a website to manage your projects,
+			cooperate with your peers and have everything organized in one place
+			then this is a tool for you!																										
+			</p>
+			
             <div ng-switch="vm.isAuthenticated()">
                 <div class="alert alert-success" ng-switch-when="true">
                     You are logged in as user "{{vm.account.login}}".
                 </div>
 
                 <div class="alert alert-warning" ng-switch-when="false">
-                    If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-                </div>
-
-                <div class="alert alert-warning" ng-switch-when="false">
-                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+           			<div>
+						Using this tool you can:
+						<ul>
+							<li>Create a project and modify it</li>
+							<li>Create boards and tasks in a project</li>
+							<li>Invite your colleagues to work on your team projects</li>
+						</ul> 
+                    </div>
+                    <p>You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a></p>
+                	<p><a class="alert-link" href="" ng-click="vm.login()">Sign in</a> to start working!</p>
                 </div>
             </div>
+			<div>
+				<p>
+				This website has been created by students of Warsaw University of Technology
+				using JHipster project template. If you have any question on JHipster
+				please visit <a href="http://jhipster.github.io/" target="_blank">JHipster homepage</a>.
+			</div>
 
             <p>
-                If you have any question on JHipster:
-            </p>
-
-            <ul>
-                <li><a href="http://jhipster.github.io/" target="_blank">JHipster homepage</a></li>
-                <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank">JHipster on Stack Overflow</a></li>
-                <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank">JHipster bug tracker</a></li>
-                <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank">JHipster public chat room</a></li>
-                <li><a href="https://twitter.com/java_hipster" target="_blank" >follow @java_hipster on Twitter</a></li>
-            </ul>
-
-            <p>
-             <span>If you like JHipster, don't forget to give us a star on </span>&nbsp;<a href="https://github.com/jhipster/generator-jhipster" target="_blank">Github</a>!
+             <span>If you are a web developer and find this project interesting please
+             visit our </span><a href="https://github.com/mmudel/Pw.Elka.Pik.Mkdev1" target="_blank">Github</a>!
             </p>
         </div>
     </div>
