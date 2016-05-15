@@ -126,7 +126,6 @@ public class ProjectResourceIntTest {
         ///When
         restMvc.perform(get("/api/projects")
             .accept(MediaType.APPLICATION_JSON))
-            .andDo(print())
             ///Then
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray());
