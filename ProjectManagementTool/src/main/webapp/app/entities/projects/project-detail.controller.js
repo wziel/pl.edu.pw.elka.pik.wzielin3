@@ -13,6 +13,7 @@
     function ProjectController ($stateParams, Project) {
         var vm = this;
 
+        vm.showUsers;
         vm.load = load;
         vm.project = {};
 

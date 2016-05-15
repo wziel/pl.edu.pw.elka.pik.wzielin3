@@ -1,6 +1,7 @@
 package pw.elka.pik.mkdev1.web.rest.dto;
 
 import pw.elka.pik.mkdev1.domain.Project;
+import pw.elka.pik.mkdev1.domain.User;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -15,6 +16,8 @@ public class ProjectDTO {
     private String name;
 
     private Long membersCount;
+    
+    private Set<String> users;
 
     public ProjectDTO(){
         this.name = "";
@@ -26,12 +29,14 @@ public class ProjectDTO {
         this.membersCount = 1L;
     }
 	public ProjectDTO(Project project) {
-		this(project.getName(), project.getMembersCount());
+		this(project.getName(), project.getMembersCount(), 
+				project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()));
 	}
 
-	public ProjectDTO(String name, Long membersCount){
+	public ProjectDTO(String name, Long membersCount, Set<String> users){
 		this.name = name;
         this.membersCount = membersCount;
+        this.setUsers(users);
 	}
 
 	public String getName() {
@@ -49,6 +54,14 @@ public class ProjectDTO {
     public void setMembersCount(Long membersCount) {
         this.membersCount = membersCount;
     }
+
+	public Set<String> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<String> users) {
+		this.users = users;
+	}
 
     @Override
 	public String toString() {

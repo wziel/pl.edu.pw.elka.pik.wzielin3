@@ -33,6 +33,15 @@ public class Project implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Long membersCount;
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+        name = "jhi_user_project",
+        joinColumns = {@JoinColumn(name = "project_id")},
+        inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<User> users = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -56,5 +65,13 @@ public class Project implements Serializable {
 
     public void setMembersCount(Long membersCount) {
         this.membersCount = membersCount;
+    }
+    
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

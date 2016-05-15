@@ -1,38 +1,48 @@
 <div>
-    <h2><span>Project</span> {{vm.project.name}}</h2>
+	<h2>
+		<span>Project</span> {{vm.project.name}}
+	</h2>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Field</th>
-                <th>Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <span>Project Name</span>
-                </td>
-                <td>
-                    <input type="text" class="input-sm form-control" value="{{vm.project.name}}" readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>Project Members Count</span>
-                </td>
-                <td>
-                    <input type="text" class="input-sm form-control" value="{{vm.project.membersCount}}" readonly>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Field</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><span>Project Name</span></td>
+					<td><input type="text" class="input-sm form-control"
+						value="{{vm.project.name}}" readonly></td>
+				</tr>
+				<tr>
+					<td><span>Project Members Count</span></td>
+					<td><input type="text" class="input-sm form-control"
+						value="{{vm.project.membersCount}}" readonly></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-    <button type="submit"
-            ui-sref="projects"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Members</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in vm.project.users">
+				<td>
+					{{user}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<button type="submit" ui-sref="projects" class="btn btn-info">
+		<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span>
+			Back</span>
+	</button>
 </div>

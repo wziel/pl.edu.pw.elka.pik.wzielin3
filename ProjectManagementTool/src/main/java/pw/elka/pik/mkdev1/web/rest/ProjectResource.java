@@ -70,7 +70,7 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<ProjectDTO> getProject(@PathVariable String name){
         log.debug("REST request to get Project : {}", name);
-        return projectService.getProjectByName(name)
+        return projectService.getProjectWithUsersByName(name)
             .map(ProjectDTO::new)
             .map(projectDTO -> new ResponseEntity<>(projectDTO, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

@@ -36,4 +36,12 @@ public class ProjectService {
         log.debug("Created Information for project: {}", project);
         return project;
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Project> getProjectWithUsersByName(String name) {
+        return projectRepository.findOneByName(name).map(p -> {
+            p.getUsers().size();
+            return p;
+        });
+    }
 }
