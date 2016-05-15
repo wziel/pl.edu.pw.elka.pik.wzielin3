@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Project;
+import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 
 import javax.inject.Inject;
@@ -25,5 +26,13 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public Optional<Project> getProjectByName(String name) {
         return projectRepository.findOneByName(name);
+    }
+    
+    @Transactional(readOnly = true)
+    public Optional<Project> getProjectWithUsersByName(String name) {
+        return projectRepository.findOneByName(name).map(p -> {
+            p.getUsers().size();
+            return p;
+        });
     }
 }
