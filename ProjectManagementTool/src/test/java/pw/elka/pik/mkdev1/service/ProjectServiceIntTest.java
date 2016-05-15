@@ -19,6 +19,7 @@ import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -48,8 +49,8 @@ public class ProjectServiceIntTest {
     @Test(expected=DataIntegrityViolationException.class)
     public void createProject_ProjectExists_() throws Exception {
         ///Given
-        ProjectDTO firstProject = new ProjectDTO("forTest", 2L);
-        ProjectDTO secondProject = new ProjectDTO("forTest", 5L);
+        ProjectDTO firstProject = new ProjectDTO("forTest", 2L, new HashSet<>());
+        ProjectDTO secondProject = new ProjectDTO("forTest", 5L, new HashSet<>());
         projectService.createProject(firstProject);
         ///When
         projectService.createProject(secondProject);
