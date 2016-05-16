@@ -42,6 +42,15 @@ public class Project implements Serializable {
         inverseJoinColumns = {@JoinColumn(name = "user_id")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User> users = new HashSet<>();
+    
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+    		name="board_project",
+    		joinColumns = {@JoinColumn(name = "project_id")},
+    		inverseJoinColumns = {@JoinColumn(name = "board_id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Board> boards = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -74,4 +83,12 @@ public class Project implements Serializable {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+	public Set<Board> getBoards() {
+		return boards;
+	}
+
+	public void setBoards(Set<Board> boards) {
+		this.boards = boards;
+	}
 }

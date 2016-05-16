@@ -31,7 +31,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/projects/{name}")
 public class BoardResource {
 
     private final Logger log = LoggerFactory.getLogger(BoardResource.class);
@@ -41,28 +41,6 @@ public class BoardResource {
 
     @Inject
     private BoardService boardService;
-
-    /**
-     * GET  /boards: get all boards.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and with body all projects
-     * @throws URISyntaxException if the pagination headers couldnt be generated
-     */
-    @RequestMapping(value = "/boards",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<List<BoardDTO>> getAllBoards(Pageable pageable)
-        throws URISyntaxException {
-        Page<Board> page = boardRepository.findAll(pageable);
-        List<BoardDTO> boardDTOs = page.getContent().stream()
-            .map(BoardDTO::new)
-            .collect(Collectors.toList());
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/boards");
-        return new ResponseEntity<>(boardDTOs, headers, HttpStatus.OK);
-    }
 
 //    @RequestMapping(value = "/boards/{name}",
 //        method = RequestMethod.GET,

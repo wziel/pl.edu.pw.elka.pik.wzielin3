@@ -1,11 +1,14 @@
 package pw.elka.pik.mkdev1.web.rest.dto;
 
+import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
 
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.*;
+
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,8 @@ public class ProjectDTO {
     private Long membersCount;
     
     private Set<String> users;
+    
+    private Set<String> boards;
 
     public ProjectDTO(){
         this.name = "";
@@ -30,13 +35,19 @@ public class ProjectDTO {
     }
 	public ProjectDTO(Project project) {
 		this(project.getName(), project.getMembersCount(), 
-				project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()));
+				project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()),
+				project.getBoards().stream().map(Board::getName).collect(Collectors.toSet()));
 	}
 
-	public ProjectDTO(String name, Long membersCount, Set<String> users){
+	public ProjectDTO(String name, Long membersCount, Set<String> users, Set<String> boards){
 		this.name = name;
         this.membersCount = membersCount;
         this.setUsers(users);
+        this.setBoards(boards);
+	}
+	
+	public ProjectDTO(String name, Long membersCount) {
+		this(name, membersCount, Collections.<String>emptySet(), Collections.<String>emptySet());
 	}
 
 	public String getName() {
@@ -61,6 +72,14 @@ public class ProjectDTO {
 
 	public void setUsers(Set<String> users) {
 		this.users = users;
+	}
+
+	public Set<String> getBoards() {
+		return boards;
+	}
+
+	public void setBoards(Set<String> boards) {
+		this.boards = boards;
 	}
 
     @Override

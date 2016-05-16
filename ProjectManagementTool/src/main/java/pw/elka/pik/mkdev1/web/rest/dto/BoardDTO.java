@@ -21,7 +21,7 @@ public class BoardDTO {
 
     public BoardDTO(){
         this.name = "";
-        this.tasks= new HashSet();
+        this.tasks= new HashSet<>();
     }
 
     public BoardDTO(String name){

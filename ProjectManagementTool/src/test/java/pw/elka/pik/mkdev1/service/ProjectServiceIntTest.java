@@ -49,8 +49,8 @@ public class ProjectServiceIntTest {
     @Test(expected=DataIntegrityViolationException.class)
     public void createProject_ProjectExists_() throws Exception {
         ///Given
-        ProjectDTO firstProject = new ProjectDTO("forTest", 2L, new HashSet<>());
-        ProjectDTO secondProject = new ProjectDTO("forTest", 5L, new HashSet<>());
+        ProjectDTO firstProject = new ProjectDTO("forTest", 2L);
+        ProjectDTO secondProject = new ProjectDTO("forTest", 5L);
         projectService.createProject(firstProject);
         ///When
         projectService.createProject(secondProject);

@@ -38,9 +38,10 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Project> getProjectWithUsersByName(String name) {
+    public Optional<Project> getProjectDetailsByName(String name) {
         return projectRepository.findOneByName(name).map(p -> {
             p.getUsers().size();
+            p.getBoards().size();
             return p;
         });
     }

@@ -20,11 +20,6 @@ public class BoardService {
     @Inject
     private BoardRepository boardRepository;
 
-    @Transactional(readOnly = true)
-    public Optional<Board> getBoaqrdByName(String name) {
-        return boardRepository.findOneByName(name);
-    }
-
 //    @Transactional(readOnly = true)
 //    public Optional<Board> getBoardWithTasksByName(String name) {
 //        return boardRepository.findOneByName(name).map(b -> {

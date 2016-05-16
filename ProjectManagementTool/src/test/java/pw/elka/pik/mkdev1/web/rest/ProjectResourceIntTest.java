@@ -74,7 +74,7 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveExpectedValues() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getProjectWithUsersByName("test")).thenReturn(testOptionalProject);
+        when(projectService.getProjectDetailsByName("test")).thenReturn(testOptionalProject);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
