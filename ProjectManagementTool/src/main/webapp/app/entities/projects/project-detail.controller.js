@@ -22,8 +22,6 @@
         function load (name) {
             Project.get({name: name}, function(result) {
                 vm.project = result;
-                //mock boards for now
-                vm.project.boards = ["Test 1", "Test board 2", "Pretty awesome board"]
             });
         }
     }
