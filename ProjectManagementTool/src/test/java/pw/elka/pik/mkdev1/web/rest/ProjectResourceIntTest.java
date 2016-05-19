@@ -36,6 +36,7 @@ import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.service.ProjectService;
+import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ProjectManagementToolApp.class)
@@ -51,8 +52,8 @@ public class ProjectResourceIntTest {
 
     private MockMvc restMvc;
 
-    private Optional<Project> testOptionalProject;
-
+    private Optional<ProjectDTO> testOptionalProjectDTO;
+    private ProjectDTO testProjectDTO;
     private Project testProject;
 
     @Before
@@ -88,18 +89,18 @@ public class ProjectResourceIntTest {
         testProject.setMembersCount(2L);
         testProject.setUsers(users);
         testProject.setBoards(boards);
-        testOptionalProject = Optional.of(testProject);
+        testProjectDTO = new ProjectDTO(testProject);
+        testOptionalProjectDTO = Optional.of(testProjectDTO);
     }
 
     @Test
     public void getProject_ProjectExists_ReceiveExpectedValues() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getProjectDetailsByName("test")).thenReturn(testOptionalProject);
+        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
-        ReflectionTestUtils.setField(projectResource, "projectRepository", projectRepository);
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
@@ -116,11 +117,10 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveUsers() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getProjectDetailsByName("test")).thenReturn(testOptionalProject);
+        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
-        ReflectionTestUtils.setField(projectResource, "projectRepository", projectRepository);
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
@@ -137,11 +137,10 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveBoards() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getProjectDetailsByName("test")).thenReturn(testOptionalProject);
+        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
-        ReflectionTestUtils.setField(projectResource, "projectRepository", projectRepository);
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
@@ -160,7 +159,6 @@ public class ProjectResourceIntTest {
         ///Given
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
-        ReflectionTestUtils.setField(projectResource, "projectRepository", projectRepository);
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
         ///When
@@ -181,7 +179,6 @@ public class ProjectResourceIntTest {
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
-        ReflectionTestUtils.setField(projectResource, "projectRepository", projectRepository);
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource)
             .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())

@@ -41,7 +41,7 @@ public class ProjectServiceIntTest {
         ProjectDTO projectDTO = new ProjectDTO("forTest");
         ///When
         projectService.createProject(projectDTO);
-        Optional<Project> project = projectService.getProjectByName("forTest");
+        Optional<ProjectDTO> project = projectService.getByName("forTest");
         ///Then
         assertTrue(project.get().getMembersCount().equals(1L));
     }

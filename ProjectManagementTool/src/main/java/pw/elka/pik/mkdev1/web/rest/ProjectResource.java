@@ -37,9 +37,6 @@ public class ProjectResource {
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     @Inject
-    private ProjectRepository projectRepository;
-
-    @Inject
     private ProjectService projectService;
 
     /**
@@ -56,9 +53,8 @@ public class ProjectResource {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ProjectDTO>> getAllProjects(Pageable pageable)
         throws URISyntaxException {
-        Page<Project> page = projectRepository.findAll(pageable);
+        Page<ProjectDTO> page = projectService.getAll(pageable);
         List<ProjectDTO> projectDTOs = page.getContent().stream()
-            .map(ProjectDTO::new)
             .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/projects");
         return new ResponseEntity<>(projectDTOs, headers, HttpStatus.OK);
@@ -70,8 +66,7 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<ProjectDTO> getProject(@PathVariable String name){
         log.debug("REST request to get Project : {}", name);
-        return projectService.getProjectDetailsByName(name)
-            .map(ProjectDTO::new)
+        return projectService.getDetailsByName(name)
             .map(projectDTO -> new ResponseEntity<>(projectDTO, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -82,15 +77,15 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save Project : {}", projectDTO);
-        if (projectRepository.findOneByName(projectDTO.getName()).isPresent()) {
+        if (projectService.exists(projectDTO.getName())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert("projectManagement", "projecexists", "Name of project already in use"))
                 .body(null);
         } else {
-            Project newProject = projectService.createProject(projectDTO);
-            return ResponseEntity.created(new URI("/api/projects/" + newProject.getName()))
-                .headers(HeaderUtil.createAlert( "A project is created with identifier " + newProject.getName(), newProject.getName()))
-                .body(newProject);
+            projectService.createProject(projectDTO);
+            return ResponseEntity.created(new URI("/api/projects/" + projectDTO.getName()))
+                .headers(HeaderUtil.createAlert( "A project is created with identifier " + projectDTO.getName(), projectDTO.getName()))
+                .body(projectDTO);
         }
     }
 
