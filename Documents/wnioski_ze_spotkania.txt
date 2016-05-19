@@ -1,0 +1,5 @@
+madrzejsze projekty encyjne (nie sam model)
+wiecej logiki w serwisach (operacje z repozytorium)
+serwis przyjmuje i zwraca projectDTO
+mniej logiki w controlerach(Resource)
+pozmieniac konstruktory tak zeby jeden uzywal drugiego
