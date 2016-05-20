@@ -2,6 +2,7 @@ package pw.elka.pik.mkdev1.web.rest.dto;
 
 import pw.elka.pik.mkdev1.domain.Board;
 //import pw.elka.pik.mkdev1.domain.Task;
+import pw.elka.pik.mkdev1.domain.TaskList;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -17,26 +18,25 @@ public class BoardDTO {
     @Size(min = 1, max = 50)
     private String name;
     
-    private Set<String> tasks;
+    private Set<String> taskLists;
 
     public BoardDTO(){
         this.name = "";
-        this.tasks= new HashSet<>();
+        this.taskLists= new HashSet<>();
     }
 
     public BoardDTO(String name){
         this.name = name;
-//        this.tasks= new HashSet();
+        this.taskLists= new HashSet();
     }
 	public BoardDTO(Board board) {
-		this(board.getName());}
+		this(board.getName(), board.getTaskLists().stream().map(TaskList::getName).collect(Collectors.toSet()));}
 
-	// board.getTasks().stream().map(Task::getName).collect(Collectors.toSet()));
 		
-//	public BoardDTO(String name, Set<String> tasks){
-//		this.name = name;
-//        this.setTasks(tasks);
-//	}
+	public BoardDTO(String name, Set<String> taskLists){
+		this.name = name;
+        this.setTaskLists(taskLists);
+	}
 
 	public String getName() {
 		return name;
@@ -46,13 +46,13 @@ public class BoardDTO {
 		this.name = name;
 	}
 
-//	public Set<String> getTasks() {
-//		return tasks;
-//	}
-//
-//	public void setTasks(Set<String> tasks) {
-//		this.tasks = tasks;
-//	}
+	public Set<String> getTaskLists() {
+		return taskLists;
+	}
+
+	public void setTaskLists(Set<String> taskLists) {
+		this.taskLists = taskLists;
+	}
 
     @Override
 	public String toString() {

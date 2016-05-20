@@ -15,9 +15,9 @@ import java.util.Set;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "board")
+@Table(name = "task_list")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Board implements Serializable {
+public class TaskList implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,14 +30,14 @@ public class Board implements Serializable {
     @Column(length = 50, unique = true, nullable = false)
     private String name;
     
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-        name = "board_task_list",
-        joinColumns = {@JoinColumn(name = "board_id")},
-        inverseJoinColumns = {@JoinColumn(name = "task_list_id")})
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<TaskList> taskLists = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(
+//        name = "board_task",
+//        joinColumns = {@JoinColumn(name = "board_id")},
+//        inverseJoinColumns = {@JoinColumn(name = "task_id")})
+//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+//    private Set<Task> tasks = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class Board implements Serializable {
 		this.name = name;
 	}
     
-    public Set<TaskList> getTaskLists() {
-        return taskLists;
-    }
-
-    public void setTaskLists(Set<TaskList> taskLists) {
-        this.taskLists = taskLists;
-    }
+//    public Set<Task> getTasks() {
+//        return tasks;
+//    }
+//
+//    public void setTasks(Set<Task> tasks) {
+//        this.tasks = tasks;
+//    }
 }
