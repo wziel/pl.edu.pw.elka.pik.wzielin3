@@ -1,18 +1,14 @@
-/**
- * Created by mmudel on 23.04.2016.
- */
 (function () {
     'use strict';
 
     angular
         .module('projectManagementToolApp')
-        .factory('Project', Project);
+        .factory('Board', Board);
 
-    Project.$inject = ['$resource'];
+    Board.$inject = ['$resource'];
 
-    function Project ($resource) {
-        var service = $resource('api/projects/:name', {}, {
-            'query': {method: 'GET', isArray: true},
+    function Board ($resource) {
+        var service = $resource('api/boards/:id', {}, {
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

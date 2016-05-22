@@ -32,44 +32,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/projects/{name}")
+@RequestMapping("/api")
 public class BoardResource {
-
+	
     private final Logger log = LoggerFactory.getLogger(BoardResource.class);
-
-    @Inject
-    private BoardRepository boardRepository;
 
     @Inject
     private BoardService boardService;
 
-//    @RequestMapping(value = "/boards/{name}",
-//        method = RequestMethod.GET,
-//        produces = MediaType.APPLICATION_JSON_VALUE)
-//    @Timed
-//    public ResponseEntity<BoardDTO> getBoard(@PathVariable String name){
-//        log.debug("REST request to get Board : {}", name);
-//        return boardService.getBoardWithTasksByName(name)
-//            .map(BoardDTO::new)
-//            .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
-//            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
-
-    @RequestMapping(value = "/projects/{name}/boards",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-        @Timed
-        @Transactional(readOnly = true)
-        public ResponseEntity<List<BoardDTO>> getAllBoards(Pageable pageable)
-            throws URISyntaxException {
-            Page<BoardDTO> page = boardService.getAll(pageable);
-            List<BoardDTO> boardDTOs = page.getContent().stream()
-                .collect(Collectors.toList());
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/projects/{name}/boards");
-            return new ResponseEntity<>(boardDTOs, headers, HttpStatus.OK);
-        }
-
-    @RequestMapping(value = "/projects/{name}/boards/{id}",
+    @RequestMapping(value = "/boards/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
         @Timed

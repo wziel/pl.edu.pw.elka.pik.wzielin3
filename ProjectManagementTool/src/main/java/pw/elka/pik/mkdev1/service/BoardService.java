@@ -27,14 +27,6 @@ public class BoardService {
         return boardRepository.findOneById(id).map(BoardDTO::new);
     }  
     
-//    @Transactional(readOnly = true)
-//    public Optional<Board> getBoardWithTaskListsById(Long id) {
-//        return boardRepository.findOneById(id).map(b -> {
-//            b.getTaskLists().size();
-//            return b;
-//        });
-//    }
-    
     @Transactional(readOnly = true)
     public Optional<BoardDTO> getDetailsById(Long id) {
         return boardRepository.findOneById(id).map(b -> {

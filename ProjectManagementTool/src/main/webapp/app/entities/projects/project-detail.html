@@ -48,7 +48,13 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="board in vm.project.boards">
-				<td>{{board}}</td>
+				<td>{{board.name}}</td>
+				<td>
+					<button type="button" ui-sref="board-detail({id:{{board.id}}})" 
+						class="btn btn-info" style="float:right">
+						<span>Details</span>
+					</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
