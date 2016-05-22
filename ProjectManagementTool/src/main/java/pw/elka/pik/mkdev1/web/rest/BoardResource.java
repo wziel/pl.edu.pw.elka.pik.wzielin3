@@ -8,6 +8,7 @@ import pw.elka.pik.mkdev1.repository.UserRepository;
 import pw.elka.pik.mkdev1.service.MailService;
 import pw.elka.pik.mkdev1.service.BoardService;
 import pw.elka.pik.mkdev1.web.rest.dto.ManagedUserDTO;
+import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.BoardDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 import pw.elka.pik.mkdev1.web.rest.util.PaginationUtil;
@@ -54,4 +55,28 @@ public class BoardResource {
 //            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 //    }
 
+    @RequestMapping(value = "/projects/{name}/boards",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+        @Timed
+        @Transactional(readOnly = true)
+        public ResponseEntity<List<BoardDTO>> getAllBoards(Pageable pageable)
+            throws URISyntaxException {
+            Page<BoardDTO> page = boardService.getAll(pageable);
+            List<BoardDTO> boardDTOs = page.getContent().stream()
+                .collect(Collectors.toList());
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/projects/{name}/boards");
+            return new ResponseEntity<>(boardDTOs, headers, HttpStatus.OK);
+        }
+
+    @RequestMapping(value = "/projects/{name}/boards/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+        @Timed
+        public ResponseEntity<BoardDTO> getBoard(@PathVariable Long id){
+            log.debug("REST request to get Board : {}", id);
+            return boardService.getDetailsById(id)
+                .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }
 }
