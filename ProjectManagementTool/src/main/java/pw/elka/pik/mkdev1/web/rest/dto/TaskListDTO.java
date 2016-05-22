@@ -31,13 +31,6 @@ public class TaskListDTO {
     	this.id = id;
     }
 
-	// board.getTasks().stream().map(Task::getName).collect(Collectors.toSet()));
-		
-//	public BoardDTO(String name, Set<String> tasks){
-//		this.name = name;
-//        this.setTasks(tasks);
-//	}
-
 	public String getName() {
 		return name;
 	}

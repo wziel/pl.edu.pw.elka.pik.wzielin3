@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Asia (generated)" id="1463948096334-1">
+        <createTable tableName="task">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="taskPK"/>
+            </column>
+            <column name="description" type="CLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-2">
+        <createTable tableName="task_list_task">
+            <column name="task_list_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-3">
+        <addPrimaryKey columnNames="task_list_id, task_id" tableName="task_list_task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-4">
+        <addUniqueConstraint columnNames="task_list_id" tableName="board_task_list"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-5">
+        <addUniqueConstraint columnNames="task_id" tableName="task_list_task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-6">
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="task_list_task" constraintName="FK_8isuw78qgtqxlmanqi2vgn656" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1463948096334-7">
+        <addForeignKeyConstraint baseColumnNames="task_list_id" baseTableName="task_list_task" constraintName="FK_n7btfajfc4np76stwbnxtwvgs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="task_list"/>
+    </changeSet>
+</databaseChangeLog>

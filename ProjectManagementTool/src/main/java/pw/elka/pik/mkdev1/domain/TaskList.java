@@ -30,14 +30,14 @@ public class TaskList implements Serializable {
     @Column(length = 50, unique = false, nullable = false)
     private String name;
     
-//    @JsonIgnore
-//    @ManyToMany
-//    @JoinTable(
-//        name = "board_task",
-//        joinColumns = {@JoinColumn(name = "board_id")},
-//        inverseJoinColumns = {@JoinColumn(name = "task_id")})
-//    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//    private Set<Task> tasks = new HashSet<>();
+    @JsonIgnore
+    @OneToMany
+    @JoinTable(
+        name = "task_list_task",
+        joinColumns = {@JoinColumn(name = "task_list_id")},
+        inverseJoinColumns = {@JoinColumn(name = "task_id")})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Task> tasks = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -55,11 +55,11 @@ public class TaskList implements Serializable {
 		this.name = name;
 	}
     
-//    public Set<Task> getTasks() {
-//        return tasks;
-//    }
-//
-//    public void setTasks(Set<Task> tasks) {
-//        this.tasks = tasks;
-//    }
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
 }
