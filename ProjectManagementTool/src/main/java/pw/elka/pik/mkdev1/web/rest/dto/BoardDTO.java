@@ -21,17 +21,16 @@ public class BoardDTO {
     @Size(min = 1, max = 50)
     private String name;
     
-    private Set<String> taskLists;
+    private Set<TaskListDTO> taskLists;
 
 	public BoardDTO(Board board) {
 		this(board.getName(), board.getId(), 
-				board.getTaskLists().stream().map(TaskList::getName).collect(Collectors.toSet()));}
-
+				board.getTaskLists().stream().map(TaskListDTO::new).collect(Collectors.toSet()));}
 		
-	public BoardDTO(String name, Long id, Set<String> taskLists){
+	public BoardDTO(String name, Long id, Set<TaskListDTO> taskLists){
 		this.name = name;
 		this.id = id;
-        this.setTaskLists(taskLists);
+        this.taskLists = taskLists;
 	}
 
 	public String getName() {
@@ -42,11 +41,11 @@ public class BoardDTO {
 		this.name = name;
 	}
 
-	public Set<String> getTaskLists() {
+	public Set<TaskListDTO> getTaskLists() {
 		return taskLists;
 	}
 
-	public void setTaskLists(Set<String> taskLists) {
+	public void setTaskLists(Set<TaskListDTO> taskLists) {
 		this.taskLists = taskLists;
 	}
 

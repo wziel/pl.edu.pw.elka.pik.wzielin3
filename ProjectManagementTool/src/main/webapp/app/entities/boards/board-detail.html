@@ -2,4 +2,12 @@
 	<h2>
 		<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
 	</h2>
+	<div class="row">
+		<div class="well well-sm taskList col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="list in vm.board.taskLists">
+			<h3>{{list.name}}</h3>
+			<div class="well" ng-repeat="task in list.tasks">
+				<h4>{{task.name}}</h4>
+			</div>
+		</div>	
+	</div>
 </div>

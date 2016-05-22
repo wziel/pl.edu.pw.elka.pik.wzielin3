@@ -149,9 +149,9 @@ public class ProjectResourceIntTest {
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
-            .andExpect(jsonPath("boards[0]").value("board2"))
-            .andExpect(jsonPath("boards[1]").value("board3"))
-            .andExpect(jsonPath("boards[2]").value("board1"));
+            .andExpect(jsonPath("boards[0].name").value("board2"))
+            .andExpect(jsonPath("boards[1].name").value("board3"))
+            .andExpect(jsonPath("boards[2].name").value("board1"));
     }
 
     @Test

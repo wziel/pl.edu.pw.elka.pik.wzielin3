@@ -10,5 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskListRepository extends JpaRepository<TaskList, Long> {
-    Optional<TaskList> findOneById(Long id);
+	//Ale po co to komu? ale dlaczego?
+    //Optional<TaskList> findOneById(Long id);
 }

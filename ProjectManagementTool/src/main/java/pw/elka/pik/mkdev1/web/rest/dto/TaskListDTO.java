@@ -14,22 +14,22 @@ import java.util.stream.Collectors;
 public class TaskListDTO {
 
 	@NotNull
+	private Long id;
+	
+	@NotNull
     @Size(min = 1, max = 50)
     private String name;
+
+    public TaskListDTO(final TaskList taskList)
+    {
+    	this(taskList.getName(), taskList.getId());
+    }
     
-    private Set<String> tasks;
-
-    public TaskListDTO(){
-        this.name = "";
-        this.tasks= new HashSet<>();
+    public TaskListDTO(final String name, final Long id)
+    {
+    	this.name = name;
+    	this.id = id;
     }
-
-    public TaskListDTO(String name){
-        this.name = name;
-//        this.tasks= new HashSet();
-    }
-	public TaskListDTO(TaskList taskList) {
-		this(taskList.getName());}
 
 	// board.getTasks().stream().map(Task::getName).collect(Collectors.toSet()));
 		
@@ -59,5 +59,13 @@ public class TaskListDTO {
 		return "TaskListDTO{" +
             "name='" + this.name + '\''  +
             "}";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
