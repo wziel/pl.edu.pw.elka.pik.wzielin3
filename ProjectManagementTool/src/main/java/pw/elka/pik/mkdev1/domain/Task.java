@@ -26,11 +26,6 @@ public class Task implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 300)
-    @Column(length = 300, unique = false, nullable = false)
-    private String description;
-
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = false, nullable = false)
     private String name;
@@ -43,14 +38,6 @@ public class Task implements Serializable {
 		this.id = id;
 	}
 	
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getName() {
 		return name;
 	}
