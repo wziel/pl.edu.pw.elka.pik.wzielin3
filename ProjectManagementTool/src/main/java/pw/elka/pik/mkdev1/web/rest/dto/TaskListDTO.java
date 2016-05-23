@@ -1,7 +1,7 @@
 package pw.elka.pik.mkdev1.web.rest.dto;
 
 import pw.elka.pik.mkdev1.domain.TaskList;
-//import pw.elka.pik.mkdev1.domain.Task;
+import pw.elka.pik.mkdev1.domain.Task;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -19,16 +19,19 @@ public class TaskListDTO {
 	@NotNull
     @Size(min = 1, max = 50)
     private String name;
+	
+    private Set<TaskDTO> tasks;
 
     public TaskListDTO(final TaskList taskList)
     {
-    	this(taskList.getName(), taskList.getId());
+    	this(taskList.getName(), taskList.getId(), taskList.getTasks().stream().map(TaskDTO::new).collect(Collectors.toSet()));
     }
     
-    public TaskListDTO(final String name, final Long id)
+    public TaskListDTO(final String name, final Long id, final Set<TaskDTO> tasks)
     {
     	this.name = name;
     	this.id = id;
+    	this.tasks = tasks;
     }
 
 	public String getName() {
@@ -39,13 +42,13 @@ public class TaskListDTO {
 		this.name = name;
 	}
 
-//	public Set<String> getTasks() {
-//		return tasks;
-//	}
-//
-//	public void setTasks(Set<String> tasks) {
-//		this.tasks = tasks;
-//	}
+	public Set<TaskDTO> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Set<TaskDTO> tasks) {
+		this.tasks = tasks;
+	}
 
     @Override
 	public String toString() {
