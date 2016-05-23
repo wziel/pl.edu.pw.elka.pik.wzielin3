@@ -17,31 +17,31 @@ import java.util.Optional;
 @Transactional
 public class TaskListService {
 
-    private final Logger log = LoggerFactory.getLogger(BoardService.class);
-
-    @Inject
-    private TaskListRepository taskListRepository;
-
-    @Transactional(readOnly = true)
-    public Optional<TaskListDTO> getById(Long id) {
-        return taskListRepository.findOneById(id).map(TaskListDTO::new);
-    }  
-    
-    @Transactional(readOnly = true)
-    public Optional<TaskListDTO> getDetailsById(Long id) {
-        return taskListRepository.findOneById(id).map(t -> {
-            t.getTasks().size();
-            return t;
-        }).map(TaskListDTO::new);
-    }
-    
-    @Transactional(readOnly = true)
-    public Page<TaskListDTO> getAll(Pageable pageable) {
-    	return taskListRepository.findAll(pageable).map(TaskListDTO::new);
-    }
- 
-    @Transactional(readOnly = true)
-    public boolean exists(Long id) {
-    	return getDetailsById(id).isPresent();
-    }
+//    private final Logger log = LoggerFactory.getLogger(BoardService.class);
+//
+//    @Inject
+//    private TaskListRepository taskListRepository;
+//
+//    @Transactional(readOnly = true)
+//    public Optional<TaskListDTO> getById(Long id) {
+//        return taskListRepository.findOneById(id).map(TaskListDTO::new);
+//    }  
+//    
+//    @Transactional(readOnly = true)
+//    public Optional<TaskListDTO> getDetailsById(Long id) {
+//        return taskListRepository.findOneById(id).map(t -> {
+//            t.getTasks().size();
+//            return t;
+//        }).map(TaskListDTO::new);
+//    }
+//    
+//    @Transactional(readOnly = true)
+//    public Page<TaskListDTO> getAll(Pageable pageable) {
+//    	return taskListRepository.findAll(pageable).map(TaskListDTO::new);
+//    }
+// 
+//    @Transactional(readOnly = true)
+//    public boolean exists(Long id) {
+//    	return getDetailsById(id).isPresent();
+//    }
 }

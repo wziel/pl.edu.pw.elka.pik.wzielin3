@@ -34,20 +34,20 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class TaskListResource {
-	
-    private final Logger log = LoggerFactory.getLogger(TaskListResource.class);
-
-    @Inject
-    private TaskListService taskListService;
-
-    @RequestMapping(value = "/tasklists/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-        @Timed
-        public ResponseEntity<TaskListDTO> getTaskList(@PathVariable Long id){
-            log.debug("REST request to get TaskList : {}", id);
-            return taskListService.getDetailsById(id)
-                .map(taskListDTO -> new ResponseEntity<>(taskListDTO, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        }
+//	
+//    private final Logger log = LoggerFactory.getLogger(TaskListResource.class);
+//
+//    @Inject
+//    private TaskListService taskListService;
+//
+//    @RequestMapping(value = "/tasklists/{id}",
+//            method = RequestMethod.GET,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//        @Timed
+//        public ResponseEntity<TaskListDTO> getTaskList(@PathVariable Long id){
+//            log.debug("REST request to get TaskList : {}", id);
+//            return taskListService.getDetailsById(id)
+//                .map(taskListDTO -> new ResponseEntity<>(taskListDTO, HttpStatus.OK))
+//                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//        }
 }
