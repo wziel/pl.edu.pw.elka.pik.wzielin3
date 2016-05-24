@@ -36,6 +36,7 @@ import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.service.ProjectService;
+import pw.elka.pik.mkdev1.web.rest.dto.BoardShortDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,30 +56,43 @@ public class ProjectResourceIntTest {
     private Optional<ProjectDTO> testOptionalProjectDTO;
     private ProjectDTO testProjectDTO;
     private Project testProject;
-
+    
+    static Set<User> users = new HashSet<>();
+    static User user = new User();
+    static User user1 = new User();
+    
+    static Set<Board> boards = new HashSet<>();
+    static Board board = new Board();
+    static Board board2 = new Board();
+    static Board board3 = new Board();
+    
+    static BoardShortDTO boardShortDTO;
+    static BoardShortDTO boardShortDTO2;
+    static BoardShortDTO boardShortDTO3;
+   
+    
     @Before
     public void setUp() {
-        Set<User> users = new HashSet<>();
-        Set<Board> boards = new HashSet<>();
-        User user = new User();
+        
+        
         user.setId(1L);
         user.setFirstName("testUser");
         user.setLogin("testLogin");
         users.add(user);
-        User user1 = new User();
+        
         user1.setId(2L);
         user1.setFirstName("testUser2");
         user1.setLogin("testLogin2");
         users.add(user1);
-        Board board = new Board();
+        
         board.setId(1L);
         board.setName("board1");
         boards.add(board);
-        Board board2 = new Board();
+        
         board2.setId(2L);
         board2.setName("board2");
         boards.add(board2);
-        Board board3 = new Board();
+
         board3.setId(3L);
         board3.setName("board3");
         boards.add(board3);
@@ -149,9 +163,10 @@ public class ProjectResourceIntTest {
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
-            .andExpect(jsonPath("boards[0].name").value("board3"))
-            .andExpect(jsonPath("boards[1].name").value("board2"))
-            .andExpect(jsonPath("boards[2].name").value("board1"));
+            .andExpect(jsonPath("$.boards").isArray())
+            .andExpect(jsonPath("$.boards[0].name").value("board1"))
+            .andExpect(jsonPath("$.boards[0].name").value("board2")) 
+            .andExpect(jsonPath("$.boards[0].name").value("board3"));
     }
 
     @Test
