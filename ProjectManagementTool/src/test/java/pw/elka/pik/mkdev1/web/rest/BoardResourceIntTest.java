@@ -12,6 +12,7 @@ import java.util.*;
 
 import javax.inject.Inject;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,7 +81,7 @@ public class BoardResourceIntTest {
         
         Task task4 = new Task();
         task4.setId(4L);
-        task4.setName("Display all the users ");
+        task4.setName("Display all users");
         tasks2.add(task4);
 
         TaskList taskList1 = new TaskList();
@@ -90,9 +91,9 @@ public class BoardResourceIntTest {
         taskLists.add(taskList1);
         
         TaskList taskList2 = new TaskList();
-        taskList1.setId(2L);
-        taskList1.setName("Finished");
-        taskList1.setTasks(tasks2);
+        taskList2.setId(2L);
+        taskList2.setName("Finished");
+        taskList2.setTasks(tasks2);
         taskLists.add(taskList2);
         
         testBoard = new Board();
@@ -140,8 +141,12 @@ public class BoardResourceIntTest {
             /// Then
             .andExpect(status().isOk())
             .andExpect(jsonPath("taskLists").isArray())
-            .andExpect(jsonPath("taskLists[0].name").value("Finished"))
-            .andExpect(jsonPath("taskLists[1].name").value("In progress"));
+            .andExpect(jsonPath("$.taskLists", Matchers.hasSize(2)))
+            .andExpect(jsonPath("taskLists[0].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2))))
+            .andExpect(jsonPath("taskLists[1].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2))))
+            .andExpect(jsonPath("taskLists[0].name", Matchers.anyOf(Matchers.equalTo("Finished"),Matchers.equalTo("In progress"))))
+            .andExpect(jsonPath("taskLists[1].name", Matchers.anyOf(Matchers.equalTo("Finished"),Matchers.equalTo("In progress"))));
+        
     }
     
     @Test
@@ -161,8 +166,16 @@ public class BoardResourceIntTest {
             /// Then
             .andExpect(status().isOk())
             .andExpect(jsonPath("taskLists").isArray())
-            .andExpect(jsonPath("taskLists[0].tasks[0].name").value("Add user"))
-            .andExpect(jsonPath("taskLists[1].name").value("Change password"));
+            .andExpect(jsonPath("$.taskLists[0].tasks", Matchers.hasSize(2)))
+            .andExpect(jsonPath("$.taskLists[1].tasks", Matchers.hasSize(2)))
+            .andExpect(jsonPath("taskLists[0].tasks[0].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2),Matchers.equalTo(3),Matchers.equalTo(4))))
+            .andExpect(jsonPath("taskLists[0].tasks[1].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3),Matchers.equalTo(4))))
+            .andExpect(jsonPath("taskLists[1].tasks[0].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3),Matchers.equalTo(4))))
+            .andExpect(jsonPath("taskLists[1].tasks[1].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3),Matchers.equalTo(4))))
+            .andExpect(jsonPath("taskLists[0].tasks[0].name", Matchers.anyOf(Matchers.equalTo("Add user"),Matchers.equalTo("Delete user"),Matchers.equalTo("Change password"),Matchers.equalTo("Display all users"))))
+            .andExpect(jsonPath("taskLists[0].tasks[1].name", Matchers.anyOf(Matchers.equalTo("Add user"),Matchers.equalTo("Delete user"),Matchers.equalTo("Change password"),Matchers.equalTo("Display all users"))))
+            .andExpect(jsonPath("taskLists[1].tasks[0].name", Matchers.anyOf(Matchers.equalTo("Add user"),Matchers.equalTo("Delete user"),Matchers.equalTo("Change password"),Matchers.equalTo("Display all users"))))
+            .andExpect(jsonPath("taskLists[1].tasks[1].name", Matchers.anyOf(Matchers.equalTo("Add user"),Matchers.equalTo("Delete user"),Matchers.equalTo("Change password"),Matchers.equalTo("Display all users"))));
     }
 
     @Test

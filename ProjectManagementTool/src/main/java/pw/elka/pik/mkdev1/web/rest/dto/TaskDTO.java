@@ -36,14 +36,20 @@ public class TaskDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     @Override
 	public String toString() {
 		return "TaskDTO{" +
 	            "name='" + this.name + '\''  +
 	            "id='" + this.id.toString() + '\''  +
-	            "name='" + this.name + '\''
-	            +
             "}";
 	}
 }

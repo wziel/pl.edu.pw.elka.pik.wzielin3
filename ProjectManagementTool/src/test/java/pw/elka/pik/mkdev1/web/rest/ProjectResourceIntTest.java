@@ -12,6 +12,7 @@ import java.util.*;
 
 import javax.inject.Inject;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,6 +70,7 @@ public class ProjectResourceIntTest {
     static BoardShortDTO boardShortDTO;
     static BoardShortDTO boardShortDTO2;
     static BoardShortDTO boardShortDTO3;
+   
    
     
     @Before
@@ -164,9 +166,13 @@ public class ProjectResourceIntTest {
             /// Then
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.boards").isArray())
-            .andExpect(jsonPath("$.boards[0].name").value("board1"))
-            .andExpect(jsonPath("$.boards[0].name").value("board2")) 
-            .andExpect(jsonPath("$.boards[0].name").value("board3"));
+            .andExpect(jsonPath("$.boards", Matchers.hasSize(3)))
+            .andExpect(jsonPath("$.boards[0].name", Matchers.anyOf(Matchers.equalTo("board1"),Matchers.equalTo("board2"), Matchers.equalTo("board3"))))
+            .andExpect(jsonPath("$.boards[1].name", Matchers.anyOf(Matchers.equalTo("board1"),Matchers.equalTo("board2"), Matchers.equalTo("board3"))))
+            .andExpect(jsonPath("$.boards[2].name", Matchers.anyOf(Matchers.equalTo("board1"),Matchers.equalTo("board2"), Matchers.equalTo("board3"))))
+            .andExpect(jsonPath("$.boards[0].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3))))
+            .andExpect(jsonPath("$.boards[1].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3))))
+            .andExpect(jsonPath("$.boards[2].id", Matchers.anyOf(Matchers.equalTo(1),Matchers.equalTo(2), Matchers.equalTo(3))));;
     }
 
     @Test
