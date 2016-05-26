@@ -91,7 +91,8 @@ public class ProjectResource {
 
     @RequestMapping(value = "/projects",
         method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
     public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) {

@@ -3,10 +3,12 @@ package pw.elka.pik.mkdev1.web.rest;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static pw.elka.pik.mkdev1.web.rest.TestUtil.convertObjectToJsonBytes;
 
 import java.util.*;
 
@@ -55,6 +57,7 @@ public class ProjectResourceIntTest {
     private MockMvc restMvc;
 
     private Optional<ProjectDTO> testOptionalProjectDTO;
+    private Optional<Project> testOptionalProject;
     private ProjectDTO testProjectDTO;
     private Project testProject;
 
@@ -106,6 +109,7 @@ public class ProjectResourceIntTest {
         testProject.setUsers(users);
         testProject.setBoards(boards);
         testProject.setDescription("Some description");
+        testOptionalProject = Optional.of(testProject);
         testProjectDTO = new ProjectDTO(testProject);
         testOptionalProjectDTO = Optional.of(testProjectDTO);
     }
@@ -231,5 +235,34 @@ public class ProjectResourceIntTest {
             ///Then
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    public void updateProject_ProjectExists_ReceiveModifiedValues() throws Exception {
+        /// Given
+        ProjectDTO modifiedProjectDTO = new ProjectDTO("test", 2L, "Modified description");
+
+        projectRepository = Mockito.mock(ProjectRepository.class);
+        when(projectRepository.findOneByName("test")).thenReturn(testOptionalProject);
+
+        /* Injection members of testing class */
+        ProjectService myProjectService = new ProjectService();
+        ReflectionTestUtils.setField(myProjectService, "projectRepository", projectRepository);
+        MockMvcBuilders.standaloneSetup(myProjectService);
+
+        ProjectResource projectResource = new ProjectResource();
+        ReflectionTestUtils.setField(projectResource, "projectService", myProjectService);
+        this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
+
+        /// When
+        restMvc.perform(put("/api/projects")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(convertObjectToJsonBytes(modifiedProjectDTO)))
+            /// Then
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("membersCount").value(2))
+            .andExpect(jsonPath("name").value("test"))
+            .andExpect(jsonPath("description").value("Modified description"));
     }
 }
