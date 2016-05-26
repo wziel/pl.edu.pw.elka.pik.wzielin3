@@ -131,6 +131,25 @@ public class ProjectResourceIntTest {
     }
 
     @Test
+    public void getProject_ProjectExists_ReceiveDescription() throws Exception {
+        /// Given
+        projectService = Mockito.mock(ProjectService.class);
+        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
+
+        /* Injection members of testing class */
+        ProjectResource projectResource = new ProjectResource();
+        ReflectionTestUtils.setField(projectResource, "projectService", projectService);
+        this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
+
+        /// When
+        restMvc.perform(get("/api/projects/test")
+            .accept(MediaType.APPLICATION_JSON))
+            /// Then
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("description").value("Some description"));
+    }
+
+    @Test
     public void getProject_ProjectExists_ReceiveUsers() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);

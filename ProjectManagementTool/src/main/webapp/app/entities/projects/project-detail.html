@@ -50,7 +50,7 @@
 			<tr ng-repeat="board in vm.project.boards">
 				<td>{{board.name}}</td>
 				<td>
-					<button type="button" ui-sref="board-detail({id:{{board.id}}})" 
+					<button type="button" ui-sref="board-detail({id:{{board.id}}})"
 						class="btn btn-info" style="float:right">
 						<span>Details</span>
 					</button>
@@ -58,6 +58,11 @@
 			</tr>
 		</tbody>
 	</table>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea readonly class="form-control" rows="5" id="description" >{{vm.project.description}}</textarea>
+    </div>
 
 	<div>
 		<button type="submit" ui-sref="projects" class="btn btn-info">
