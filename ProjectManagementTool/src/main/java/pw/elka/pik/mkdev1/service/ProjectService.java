@@ -4,11 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
+import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -42,6 +45,18 @@ public class ProjectService {
         project.setDescription(projectDTO.getDescription());
         projectRepository.save(project);
         log.debug("Created Information for project: {}", project);
+    }
+
+    public ResponseEntity<ProjectDTO> modifyProject(ProjectDTO projectDTO) {
+        return projectRepository.findOneByName(projectDTO.getName())
+            .map(project -> {
+                project.setDescription(projectDTO.getDescription());
+                return ResponseEntity.ok()
+                    .headers(HeaderUtil.createAlert("A project is updated with identifier " + projectDTO.getName(), projectDTO.getName()))
+                    .body(new ProjectDTO(projectRepository
+                        .findOneByName(projectDTO.getName()).get()));
+            })
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Transactional(readOnly = true)

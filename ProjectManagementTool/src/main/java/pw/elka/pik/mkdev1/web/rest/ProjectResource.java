@@ -89,4 +89,13 @@ public class ProjectResource {
         }
     }
 
+    @RequestMapping(value = "/projects",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) {
+        log.debug("REST request to update Project : {}", projectDTO);
+        return projectService.modifyProject(projectDTO);
+    }
 }

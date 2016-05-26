@@ -54,7 +54,7 @@
                         resolve: {
                             entity: function () {
                                 return {
-                                    name: null, membersCount: null
+                                    name: null, membersCount: null, description: null
                                 };
                             }
                         }
@@ -62,6 +62,31 @@
                         $state.go('projects', null, { reload: true });
                     }, function() {
                         $state.go('projects');
+                    });
+                }]
+            })
+            .state('projects.modify', {
+                parent: 'projects',
+                url: '/{name}/modify',
+                data: {
+                    authorities: ['ROLE_ADMIN']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/projects/project-modify-dialog.html',
+                        controller: 'ProjectModifyProjectDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: ['Project', function(Project) {
+                                return Project.get({name : $stateParams.name});
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('projects', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
                     });
                 }]
             });
