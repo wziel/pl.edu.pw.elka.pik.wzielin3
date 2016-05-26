@@ -17,13 +17,11 @@
 			<tbody>
 				<tr>
 					<td><span>Project Name</span></td>
-					<td><input type="text" class="input-sm form-control"
-						value="{{vm.project.name}}" readonly></td>
+					<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{vm.project.name}}</span></td>
 				</tr>
 				<tr>
 					<td><span>Project Members Count</span></td>
-					<td><input type="text" class="input-sm form-control"
-						value="{{vm.project.membersCount}}" readonly></td>
+					<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{vm.project.membersCount}}</span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -38,7 +36,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="user in vm.project.users">
-				<td>{{user}}</td>
+				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{user}}</span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -51,7 +49,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="board in vm.project.boards">
-				<td>{{board.name}}</td>
+				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{board.name}}</span></td>
 				<td>
 					<button type="button" ui-sref="board-detail({id:{{board.id}}})"
 						class="btn btn-info" style="float:right">
@@ -63,8 +61,8 @@
 	</table>
 
     <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea readonly class="form-control" rows="5" id="description" >{{vm.project.description}}</textarea>
+        <label for="description">Description</label>
+        <span style="height:100%; display:block; overflow:auto" class="text-info" id="description" >{{vm.project.description}}</span>
     </div>
 
 	<div>
