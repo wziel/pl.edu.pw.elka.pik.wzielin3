@@ -22,7 +22,7 @@ public class ProjectDTO {
 
     private Set<String> users;
 
-    private Set<String> boards;
+    private Set<BoardShortDTO> boards;
 
     private String description;
 
@@ -37,11 +37,11 @@ public class ProjectDTO {
     public ProjectDTO(Project project) {
         this(project.getName(), project.getMembersCount(),
             project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()),
-            project.getBoards().stream().map(Board::getName).collect(Collectors.toSet()),
+            project.getBoards().stream().map(BoardShortDTO::new).collect(Collectors.toSet()),
             project.getDescription());
     }
 
-    public ProjectDTO(String name, Long membersCount, Set<String> users, Set<String> boards, String description) {
+    public ProjectDTO(String name, Long membersCount, Set<String> users, Set<BoardShortDTO> boards, String description) {
         this.name = name;
         this.membersCount = membersCount;
         this.setUsers(users);
@@ -81,11 +81,11 @@ public class ProjectDTO {
         this.users = users;
     }
 
-    public Set<String> getBoards() {
+    public Set<BoardShortDTO> getBoards() {
         return boards;
     }
 
-    public void setBoards(Set<String> boards) {
+    public void setBoards(Set<BoardShortDTO> boards) {
         this.boards = boards;
     }
 

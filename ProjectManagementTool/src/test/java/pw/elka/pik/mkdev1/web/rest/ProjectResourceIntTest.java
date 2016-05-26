@@ -57,40 +57,40 @@ public class ProjectResourceIntTest {
     private Optional<ProjectDTO> testOptionalProjectDTO;
     private ProjectDTO testProjectDTO;
     private Project testProject;
-    
+
     static Set<User> users = new HashSet<>();
     static User user = new User();
     static User user1 = new User();
-    
+
     static Set<Board> boards = new HashSet<>();
     static Board board = new Board();
     static Board board2 = new Board();
     static Board board3 = new Board();
-    
+
     static BoardShortDTO boardShortDTO;
     static BoardShortDTO boardShortDTO2;
     static BoardShortDTO boardShortDTO3;
-   
-   
-    
+
+
+
     @Before
     public void setUp() {
-        
-        
+
+
         user.setId(1L);
         user.setFirstName("testUser");
         user.setLogin("testLogin");
         users.add(user);
-        
+
         user1.setId(2L);
         user1.setFirstName("testUser2");
         user1.setLogin("testLogin2");
         users.add(user1);
-        
+
         board.setId(1L);
         board.setName("board1");
         boards.add(board);
-        
+
         board2.setId(2L);
         board2.setName("board2");
         boards.add(board2);
@@ -98,13 +98,14 @@ public class ProjectResourceIntTest {
         board3.setId(3L);
         board3.setName("board3");
         boards.add(board3);
-        
+
         testProject = new Project();
         testProject.setId(1L);
         testProject.setName("test");
         testProject.setMembersCount(2L);
         testProject.setUsers(users);
         testProject.setBoards(boards);
+        testProject.setDescription("Some description");
         testProjectDTO = new ProjectDTO(testProject);
         testOptionalProjectDTO = Optional.of(testProjectDTO);
     }
@@ -128,7 +129,7 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("membersCount").value(2))
             .andExpect(jsonPath("name").value("test"));
     }
-    
+
     @Test
     public void getProject_ProjectExists_ReceiveUsers() throws Exception {
         /// Given
@@ -148,7 +149,7 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("users[1]").value("testLogin"))
             .andExpect(jsonPath("users[0]").value("testLogin2"));
     }
-    
+
     @Test
     public void getProject_ProjectExists_ReceiveBoards() throws Exception {
         /// Given
