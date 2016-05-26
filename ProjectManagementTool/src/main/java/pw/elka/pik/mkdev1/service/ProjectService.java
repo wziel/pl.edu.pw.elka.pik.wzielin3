@@ -39,6 +39,7 @@ public class ProjectService {
         Project project = new Project();
         project.setName(projectDTO.getName());
         project.setMembersCount(1L);
+        project.setDescription(projectDTO.getDescription());
         projectRepository.save(project);
         log.debug("Created Information for project: {}", project);
     }
@@ -51,7 +52,7 @@ public class ProjectService {
             return p;
         }).map(ProjectDTO::new);
     }
-    
+
     @Transactional(readOnly = true)
     public boolean exists(String name) {
     	return getDetailsByName(name).isPresent();

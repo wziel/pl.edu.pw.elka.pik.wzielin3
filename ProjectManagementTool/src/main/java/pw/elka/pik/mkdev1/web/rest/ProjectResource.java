@@ -79,7 +79,7 @@ public class ProjectResource {
         log.debug("REST request to save Project : {}", projectDTO);
         if (projectService.exists(projectDTO.getName())) {
             return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("projectManagement", "projecexists", "Name of project already in use"))
+                .headers(HeaderUtil.createFailureAlert("projectManagement", "projectexists", "Name of project already in use"))
                 .body(null);
         } else {
             projectService.createProject(projectDTO);

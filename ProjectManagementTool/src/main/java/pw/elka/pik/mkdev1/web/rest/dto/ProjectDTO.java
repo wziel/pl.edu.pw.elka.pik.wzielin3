@@ -22,31 +22,39 @@ public class ProjectDTO {
 
     private Set<String> users;
 
-    private Set<BoardShortDTO> boards;
+    private Set<String> boards;
+
+    private String description;
 
     public ProjectDTO() {
-        this("", 1L, Collections.emptySet(), Collections.emptySet());
+        this("", 1L, Collections.emptySet(), Collections.emptySet(), "");
     }
 
     public ProjectDTO(String name) {
-        this(name, 1L, Collections.emptySet(), Collections.emptySet());
+        this(name, 1L, Collections.emptySet(), Collections.emptySet(), "");
     }
 
     public ProjectDTO(Project project) {
         this(project.getName(), project.getMembersCount(),
             project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()),
-            project.getBoards().stream().map(BoardShortDTO::new).collect(Collectors.toSet()));
+            project.getBoards().stream().map(Board::getName).collect(Collectors.toSet()),
+            project.getDescription());
     }
 
-    public ProjectDTO(String name, Long membersCount, Set<String> users, Set<BoardShortDTO> boards) {
+    public ProjectDTO(String name, Long membersCount, Set<String> users, Set<String> boards, String description) {
         this.name = name;
         this.membersCount = membersCount;
         this.setUsers(users);
         this.setBoards(boards);
+        this.description = description;
     }
 
     public ProjectDTO(String name, Long membersCount) {
-        this(name, membersCount, Collections.emptySet(), Collections.emptySet());
+        this(name, membersCount, Collections.emptySet(), Collections.emptySet(), "");
+    }
+
+    public ProjectDTO(String name, Long membersCount, String description){
+        this(name, membersCount, Collections.emptySet(), Collections.emptySet(), description);
     }
 
     public String getName() {
@@ -73,12 +81,20 @@ public class ProjectDTO {
         this.users = users;
     }
 
-    public Set<BoardShortDTO> getBoards() {
+    public Set<String> getBoards() {
         return boards;
     }
 
-    public void setBoards(Set<BoardShortDTO> boards) {
+    public void setBoards(Set<String> boards) {
         this.boards = boards;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
