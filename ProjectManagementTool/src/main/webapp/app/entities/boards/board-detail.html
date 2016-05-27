@@ -19,7 +19,6 @@
 	</style>
 	<div>
 		<h2>
-			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
 			<span class="pull-right">
 				<button type="button" ui-sref="board-edit({boardId: vm.board.id})"
 					class="btn btn-primary btn-sm">
@@ -29,13 +28,13 @@
 		        	<span class="glyphicon glyphicon-plus"></span>
 		        </button>
 			</span>
+			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
 		</h2>
 	</div>
 	<div class="board">
 		<ul class="list-inline">
 			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists">
 				<h3>
-					<span>{{taskList.name}}</span>
 					<span class="pull-right">
 	        			<button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
 	        				<span class="glyphicon glyphicon-pencil"></span>
@@ -44,15 +43,16 @@
 	        				<span class="glyphicon glyphicon-plus"></span>
 	        			</button>
 					</span>
+					<span>{{taskList.name}}</span>
 				</h3>
 				<ul class="list-group">
 					<li class="list-group-item" ng-repeat="task in taskList.tasks">
 						<div>
-							{{task.name}}
 							<button ui-sref="board-detail.task-edit({taskId: task.id})"
 								class="btn btn-primary btn-xs pull-right">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</button>
+							{{task.name}}
 						</div>
 					</li>
 				</ul>
