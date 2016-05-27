@@ -69,7 +69,8 @@ public class TaskListResource {
     public ResponseEntity<?> updateTaskList(@RequestBody TaskListDTO taskListDTO) {
     	if(taskListService.exists(taskListDTO.getId())) {
     		taskListService.update(taskListDTO);
+        	return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
     	}
-    	return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
+    	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

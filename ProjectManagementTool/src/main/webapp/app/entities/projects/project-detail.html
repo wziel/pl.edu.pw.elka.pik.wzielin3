@@ -46,17 +46,31 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Boards</th>
+				<th>
+					<span>Boards</span>
+				</th>
+				<th>
+					<button type="button" ui-sref="board-new"
+						class="btn btn-primary btn-sm" style="float:right">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="board in vm.project.boards">
 				<td>{{board.name}}</td>
 				<td>
-					<button type="button" ui-sref="board-detail({boardId:{{board.id}}})"
-						class="btn btn-info" style="float:right">
-						<span>Details</span>
-					</button>
+					<div style="float:right">
+						<button type="button" ui-sref="board-detail({boardId:{{board.id}}})"
+							class="btn btn-info btn-sm" style="float:right">
+							<span class="glyphicon glyphicon-eye-open"></span>
+						</button>
+						<button type="button" ui-sref="board-edit({boardId: board.id})"
+							class="btn btn-primary btn-sm">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					</div>
 				</td>
 			</tr>
 		</tbody>

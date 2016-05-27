@@ -22,6 +22,8 @@ public class BoardDTO {
     private String name;
     
     private Set<TaskListDTO> taskLists;
+    
+    public BoardDTO() { }
 
 	public BoardDTO(Board board) {
 		this(board.getName(), board.getId(), 
@@ -29,7 +31,7 @@ public class BoardDTO {
 		
 	public BoardDTO(String name, Long id, Set<TaskListDTO> taskLists){
 		this.name = name;
-		this.id = id;
+		this.setId(id);
         this.taskLists = taskLists;
 	}
 
@@ -53,7 +55,15 @@ public class BoardDTO {
 	public String toString() {
 		return "BoardDTO{" +
 	            "name='" + this.name + '\''  +
-	            "id='" + this.id.toString() + '\''  +
+	            "id='" + (this.getId() != null ? this.getId().toString() : "null") + '\''  +
             "}";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

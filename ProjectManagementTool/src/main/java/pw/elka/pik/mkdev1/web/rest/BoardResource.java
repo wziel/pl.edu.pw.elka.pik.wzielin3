@@ -9,6 +9,7 @@ import pw.elka.pik.mkdev1.service.MailService;
 import pw.elka.pik.mkdev1.service.BoardService;
 import pw.elka.pik.mkdev1.web.rest.dto.ManagedUserDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskListDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.BoardDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 import pw.elka.pik.mkdev1.web.rest.util.PaginationUtil;
@@ -50,4 +51,27 @@ public class BoardResource {
                 .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         }
+    
+    @RequestMapping(value = "/boards",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<?> createBoard(@RequestBody BoardDTO boardDTO, HttpServletRequest request) throws URISyntaxException {
+        boardService.create(boardDTO);
+        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/boards",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<?> updateBoard(@RequestBody BoardDTO boardDTO) {
+    	if(boardService.exists(boardDTO.getId())) {
+    		boardService.update(boardDTO);
+        	return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

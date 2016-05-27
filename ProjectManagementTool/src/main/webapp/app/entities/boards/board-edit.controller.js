@@ -7,15 +7,15 @@
 
     angular
         .module('projectManagementToolApp')
-        .controller('TaskListEditController', TaskListEditController);
+        .controller('BoardEditController', BoardEditController);
 
-    TaskListEditController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'TaskList'];
+    BoardEditController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'Board'];
 
-    function TaskListEditController ($stateParams, $uibModalInstance, entity, TaskList) {
+    function BoardEditController ($stateParams, $uibModalInstance, entity, Board) {
         var vm = this;
         vm.clear = clear;
         vm.save = save;
-        vm.taskList = entity;
+        vm.board = entity;
         vm.save = save;
         vm.isEdit = isEdit();
 
@@ -35,15 +35,15 @@
         function save () {
             vm.isSaving = true;
             if(isEdit()) {
-                TaskList.update(vm.taskList, onSaveSuccess, onSaveError);
+                Board.update(vm.board, onSaveSuccess, onSaveError);
             }
             else {
-            	TaskList.save(vm.taskList, onSaveSuccess, onSaveError);	
+            	Board.save(vm.board, onSaveSuccess, onSaveError);	
             }
         }
         
         function isEdit() {
-        	return vm.taskList.id !== null;
+        	return vm.board.id !== null;
         }
     }
 })();

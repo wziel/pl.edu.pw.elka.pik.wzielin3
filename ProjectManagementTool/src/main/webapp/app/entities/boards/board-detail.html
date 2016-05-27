@@ -23,9 +23,15 @@
 	<div>
 		<h2>
 			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
-	        <button type="button" class="btn btn-primary btn-sm float-right" ui-sref="board-detail.list-new">
-	        	<span class="glyphicon glyphicon-plus"></span>
-	        </button>
+			<span class="float-right">
+				<button type="button" ui-sref="board-edit({boardId: vm.board.id})"
+					class="btn btn-primary btn-sm">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+		        <button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-new">
+		        	<span class="glyphicon glyphicon-plus"></span>
+		        </button>
+			</span>
 		</h2>
 	</div>
 	<div class="board">

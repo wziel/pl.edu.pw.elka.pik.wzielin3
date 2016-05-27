@@ -11,10 +11,7 @@
         $stateProvider.state('board-detail.list-new', {
             parent: 'board-detail',
             url: '/lists/new',
-            data: {
-                authorities: ['ROLE_ADMIN']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', "TaskList", function($stateParams, $state, $uibModal, TaskList) {
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
                     templateUrl: 'app/entities/tasklists/tasklist-edit.html',
                     controller: 'TaskListEditController',
@@ -35,9 +32,6 @@
         }).state('board-detail.list-edit', {
             parent: 'board-detail',
             url: '/lists/{taskListId}/edit',
-            data: {
-                authorities: ['ROLE_ADMIN']
-            },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
                     templateUrl: 'app/entities/tasklists/tasklist-edit.html',
