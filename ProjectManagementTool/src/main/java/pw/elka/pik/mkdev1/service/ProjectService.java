@@ -12,13 +12,12 @@ import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.repository.UserRepository;
+import pw.elka.pik.mkdev1.security.SecurityUtils;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 
 import javax.inject.Inject;
 import java.util.Optional;
-
-import static pw.elka.pik.mkdev1.security.SecurityUtils.getCurrentUserLogin;
 
 /**
  * Created by mmudel on 23.04.2016.
@@ -42,9 +41,7 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Page<ProjectDTO> getAllProjectsForCurrentUser(Pageable pageable) {
-        String login = getCurrentUserLogin();
-        User user = userRepository.findOneByLogin(login).get();
-
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
     	return projectRepository.findAllByUsers(user, pageable).map(ProjectDTO::new);
     }
 
