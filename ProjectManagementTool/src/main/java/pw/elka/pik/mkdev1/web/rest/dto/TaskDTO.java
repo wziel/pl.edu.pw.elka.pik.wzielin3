@@ -20,6 +20,8 @@ public class TaskDTO {
     @Size(min = 1, max = 50)
     private String name;
 	
+	public TaskDTO() {}
+	
 	public TaskDTO(Task task) {
 		this(task.getName(), task.getId());
 		}
@@ -49,7 +51,7 @@ public class TaskDTO {
 	public String toString() {
 		return "TaskDTO{" +
 	            "name='" + this.name + '\''  +
-	            "id='" + this.id.toString() + '\''  +
+	            "id='" + (this.id != null ? this.id.toString() : "") + '\''  +
             "}";
 	}
 }

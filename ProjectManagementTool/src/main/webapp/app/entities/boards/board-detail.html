@@ -16,19 +16,16 @@
 		.list-inline {
 			white-space: nowrap
 		}
-		.float-right {
-			float:right;
-		}
 	</style>
 	<div>
 		<h2>
 			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
-			<span class="float-right">
+			<span class="pull-right">
 				<button type="button" ui-sref="board-edit({boardId: vm.board.id})"
 					class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
-		        <button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-new">
+		        <button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.list-new">
 		        	<span class="glyphicon glyphicon-plus"></span>
 		        </button>
 			</span>
@@ -39,13 +36,24 @@
 			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists">
 				<h3>
 					<span>{{taskList.name}}</span>
-        			<button type="button" class="btn btn-primary btn-sm float-right" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
-        				<span class="glyphicon glyphicon-pencil"></span>
-        			</button>
+					<span class="pull-right">
+	        			<button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
+	        				<span class="glyphicon glyphicon-pencil"></span>
+	        			</button>
+	        			<button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.task-new" >
+	        				<span class="glyphicon glyphicon-plus"></span>
+	        			</button>
+					</span>
 				</h3>
 				<ul class="list-group">
 					<li class="list-group-item" ng-repeat="task in taskList.tasks">
-						<span>{{task.name}}</span>
+						<div>
+							{{task.name}}
+							<button ui-sref="board-detail.task-edit({taskId: task.id})"
+								class="btn btn-primary btn-xs pull-right">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+						</div>
 					</li>
 				</ul>
 			</li>

@@ -11,5 +11,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    
+    public Optional<Task> findOneById(Long id);
 }
