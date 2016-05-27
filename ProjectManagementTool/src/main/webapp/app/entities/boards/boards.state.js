@@ -10,7 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider.state('board-detail', {
             parent: 'project-detail',
-            url: '/boards/:id',
+            url: '/boards/:boardId',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Board details'

@@ -53,7 +53,7 @@
 			<tr ng-repeat="board in vm.project.boards">
 				<td>{{board.name}}</td>
 				<td>
-					<button type="button" ui-sref="board-detail({id:{{board.id}}})"
+					<button type="button" ui-sref="board-detail({boardId:{{board.id}}})"
 						class="btn btn-info" style="float:right">
 						<span>Details</span>
 					</button>

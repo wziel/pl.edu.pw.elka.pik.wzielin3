@@ -40,13 +40,13 @@ public class BoardResource {
     @Inject
     private BoardService boardService;
 
-    @RequestMapping(value = "/boards/{id}",
+    @RequestMapping(value = "/boards/{boardId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
         @Timed
-        public ResponseEntity<BoardDTO> getBoard(@PathVariable Long id){
-            log.debug("REST request to get Board : {}", id);
-            return boardService.getDetailsById(id)
+        public ResponseEntity<BoardDTO> getBoard(@PathVariable Long boardId){
+            log.debug("REST request to get Board : {}", boardId);
+            return boardService.getDetailsById(boardId)
                 .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         }

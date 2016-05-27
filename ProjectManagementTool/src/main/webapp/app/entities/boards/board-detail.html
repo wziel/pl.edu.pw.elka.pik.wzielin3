@@ -1,7 +1,7 @@
 <div>
 	<style>
 		.taskList {
-			background-color: lightcoral;
+			background-color: lightblue;
 			height: 30em;
 			width: 20em;
 			overflow-y: auto;
@@ -16,24 +16,29 @@
 		.list-inline {
 			white-space: nowrap
 		}
+		.float-right {
+			float:right;
+		}
 	</style>
-	<h2>
-		<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
-	</h2>
+	<div>
+		<h2>
+			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
+	        <button type="button" class="btn btn-primary btn-sm float-right" ui-sref="board-detail.list-new">
+	        	<span class="glyphicon glyphicon-plus"></span>
+	        </button>
+		</h2>
+	</div>
 	<div class="board">
 		<ul class="list-inline">
-			<li class="taskList well well-sm" ng-repeat="list in vm.board.taskLists">
-				<h4>{{list.name}}</h4>
+			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists">
+				<h3>
+					<span>{{taskList.name}}</span>
+        			<button type="button" class="btn btn-primary btn-sm float-right" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
+        				<span class="glyphicon glyphicon-pencil"></span>
+        			</button>
+				</h3>
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="task in list.tasks">
-						<span>{{task.name}}</span>
-					</li>
-				</ul>
-			</li>
-			<li class="taskList well well-sm" ng-repeat="list in vm.board.taskLists">
-				<h4>{{list.name}}</h4>
-				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="task in list.tasks">
+					<li class="list-group-item" ng-repeat="task in taskList.tasks">
 						<span>{{task.name}}</span>
 					</li>
 				</ul>

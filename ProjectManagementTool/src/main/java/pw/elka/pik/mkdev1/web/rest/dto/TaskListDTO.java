@@ -21,6 +21,8 @@ public class TaskListDTO {
     private String name;
 	
     private Set<TaskDTO> tasks;
+    
+    public TaskListDTO() { }
 
     public TaskListDTO(final TaskList taskList)
     {

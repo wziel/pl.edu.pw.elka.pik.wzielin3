@@ -3,21 +3,21 @@
 
     angular
         .module('projectManagementToolApp')
-        .controller('BoardController', ProjectController);
+        .controller('BoardController', BoardController);
 
-    ProjectController.$inject = ['$stateParams', 'Board'];
+    BoardController.$inject = ['$stateParams', 'Board'];
 
-    function ProjectController ($stateParams, Board) {
+    function BoardController ($stateParams, Board) {
         var vm = this;
 
         vm.load = load;
         vm.board = {};
         vm.projectName = $stateParams.name;
 
-        vm.load($stateParams.id);
+        vm.load($stateParams.boardId);
 
         function load (boardId) {
-        	Board.get({id: boardId}, function(result) {
+        	Board.get({boardId: boardId}, function(result) {
         		vm.board = result;
         	})
         }
