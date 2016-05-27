@@ -218,11 +218,12 @@ public class ProjectResourceIntTest {
         /// Given
         List<Project> projectsList = new LinkedList<>();
         projectsList.add(testProject);
-        Page<Project> page = new PageImpl<>(projectsList);
-        projectRepository = Mockito.mock(ProjectRepository.class);
-        when(projectRepository.findAll(any(Pageable.class))).thenReturn(page);
+        Page<ProjectDTO> page = new PageImpl<>(projectsList).map(ProjectDTO::new);
+        projectService = Mockito.mock(ProjectService.class);
+        when(projectService.getAllProjectsForCurrentUser(any(Pageable.class))).thenReturn(page);
 
         /* Injection members of testing class */
+
         ProjectResource projectResource = new ProjectResource();
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource)
