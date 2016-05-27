@@ -9,12 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Project;
+import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
+import pw.elka.pik.mkdev1.repository.UserRepository;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 
 import javax.inject.Inject;
 import java.util.Optional;
+
+import static pw.elka.pik.mkdev1.security.SecurityUtils.getCurrentUserLogin;
 
 /**
  * Created by mmudel on 23.04.2016.
@@ -28,14 +32,20 @@ public class ProjectService {
     @Inject
     private ProjectRepository projectRepository;
 
+    @Inject
+    private UserRepository userRepository;
+
     @Transactional(readOnly = true)
     public Optional<ProjectDTO> getByName(String name) {
         return projectRepository.findOneByName(name).map(ProjectDTO::new);
     }
 
     @Transactional(readOnly = true)
-    public Page<ProjectDTO> getAll(Pageable pageable) {
-    	return projectRepository.findAll(pageable).map(ProjectDTO::new);
+    public Page<ProjectDTO> getAllProjectsForCurrentUser(Pageable pageable) {
+        String login = getCurrentUserLogin();
+        User user = userRepository.findOneByLogin(login).get();
+
+    	return projectRepository.findAllByUsers(user, pageable).map(ProjectDTO::new);
     }
 
     public void createProject(ProjectDTO projectDTO) {

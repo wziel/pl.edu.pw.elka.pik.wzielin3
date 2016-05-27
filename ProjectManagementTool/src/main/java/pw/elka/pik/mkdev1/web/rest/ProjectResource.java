@@ -51,9 +51,9 @@ public class ProjectResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ProjectDTO>> getAllProjects(Pageable pageable)
+    public ResponseEntity<List<ProjectDTO>> getAllProjectsForCurrentUser(Pageable pageable)
         throws URISyntaxException {
-        Page<ProjectDTO> page = projectService.getAll(pageable);
+        Page<ProjectDTO> page = projectService.getAllProjectsForCurrentUser(pageable);
         List<ProjectDTO> projectDTOs = page.getContent().stream()
             .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/projects");

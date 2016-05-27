@@ -42,7 +42,7 @@
                 parent: 'projects',
                 url: '/new',
                 data: {
-                    authorities: ['ROLE_ADMIN']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -69,7 +69,7 @@
                 parent: 'projects',
                 url: '/{name}/modify',
                 data: {
-                    authorities: ['ROLE_ADMIN']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
