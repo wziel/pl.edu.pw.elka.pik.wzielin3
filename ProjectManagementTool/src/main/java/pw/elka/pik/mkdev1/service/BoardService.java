@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.repository.BoardRepository;
+import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.web.rest.dto.BoardDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.TaskListDTO;
 
@@ -23,6 +24,8 @@ public class BoardService {
 
     @Inject
     private BoardRepository boardRepository;
+    @Inject
+    private ProjectRepository projectRepository;
 
     @Transactional(readOnly = true)
     public Optional<BoardDTO> getById(Long id) {
@@ -49,10 +52,19 @@ public class BoardService {
     }
     
 	public void create(BoardDTO boardDTO) {
-		throw new NotImplementedException();
+		projectRepository.findOneById(boardDTO.getProjectId()).ifPresent(project -> {
+			Board board = new Board();
+			board.setName(boardDTO.getName());
+			boardRepository.save(board);
+			project.getBoards().add(board);
+			projectRepository.save(project);
+		});
 	}
 	
 	public void update(BoardDTO boardDTO) {
-		throw new NotImplementedException();
+		boardRepository.findOneById(boardDTO.getId()).ifPresent(board -> {
+			board.setName(boardDTO.getName());;
+			boardRepository.save(board);
+		});
 	}
 }

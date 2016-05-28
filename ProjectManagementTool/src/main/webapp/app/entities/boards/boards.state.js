@@ -24,7 +24,7 @@
             }
         }).state('board-new', {
             parent: 'project-detail',
-            url: 'boards/new',
+            url: '/new',
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
                     templateUrl: 'app/entities/boards/board-edit.html',
@@ -37,7 +37,7 @@
                             return { 
                             	id: null, 
                             	name: null,
-                            	
+                            	projectId: $stateParams.projectId
                             };
                         }
                     }
