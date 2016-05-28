@@ -2,6 +2,7 @@ package pw.elka.pik.mkdev1.web.rest;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -9,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static pw.elka.pik.mkdev1.web.rest.TestUtil.convertObjectToJsonBytes;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -265,5 +267,28 @@ public class ProjectResourceIntTest {
             .andExpect(jsonPath("membersCount").value(2))
             .andExpect(jsonPath("name").value("test"))
             .andExpect(jsonPath("description").value("Modified description"));
+    }
+
+    @Test
+    public void deleteUserFromProject_UserExists_ReceiveProjectWithoutUser() throws Exception {
+        /// Given
+        projectRepository = Mockito.mock(ProjectRepository.class);
+        when(projectRepository.findOneByName("test")).thenReturn(testOptionalProject);
+
+        /* Injection members of testing class */
+        ProjectService myProjectService = new ProjectService();
+        ReflectionTestUtils.setField(myProjectService, "projectRepository", projectRepository);
+        MockMvcBuilders.standaloneSetup(myProjectService);
+
+        ProjectResource projectResource = new ProjectResource();
+        ReflectionTestUtils.setField(projectResource, "projectService", myProjectService);
+        this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
+
+        /// When
+        restMvc.perform(delete("/api/projects/test/testLogin"));
+
+        /// Then
+        assertFalse(testOptionalProject.get().getUsers().contains(user));
+        assertTrue(testOptionalProject.get().getUsers().contains(user1));
     }
 }

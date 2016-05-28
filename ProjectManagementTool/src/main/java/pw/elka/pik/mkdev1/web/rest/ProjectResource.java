@@ -99,4 +99,15 @@ public class ProjectResource {
         log.debug("REST request to update Project : {}", projectDTO);
         return projectService.modifyProject(projectDTO);
     }
+
+    @RequestMapping(value = "/projects/{name}/{login}",
+        method = RequestMethod.DELETE)
+    @Timed
+    @Transactional
+    public ResponseEntity<Void> deleteUserFromProject(@PathVariable String name, @PathVariable String login){
+        log.debug("REST request to delete User from Project : {}", name + ' ' + login);
+        projectService.deleteUserFromProject(name, login);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user " + login + " is deleted from project" + name, login)).build();
+
+    }
 }

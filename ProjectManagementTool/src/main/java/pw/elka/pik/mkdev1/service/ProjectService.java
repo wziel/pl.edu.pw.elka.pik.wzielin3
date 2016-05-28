@@ -42,7 +42,7 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public Page<ProjectDTO> getAllProjectsForCurrentUser(Pageable pageable) {
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
-    	return projectRepository.findAllByUsers(user, pageable).map(ProjectDTO::new);
+        return projectRepository.findAllByUsers(user, pageable).map(ProjectDTO::new);
     }
 
     public void createProject(ProjectDTO projectDTO) {
@@ -75,8 +75,15 @@ public class ProjectService {
         }).map(ProjectDTO::new);
     }
 
+    public void deleteUserFromProject(String name, String login) {
+        Project project = projectRepository.findOneByName(name).get();
+        project.deleteUser(login);
+        projectRepository.save(project);
+        return;
+    }
+
     @Transactional(readOnly = true)
     public boolean exists(String name) {
-    	return getDetailsByName(name).isPresent();
+        return getDetailsByName(name).isPresent();
     }
 }

@@ -45,8 +45,7 @@
 				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{user}}</span></td>
                 <td class="text-right">
                     <button type="submit"
-                            ui-sref="project-detail({name:project.name})"
-                            class="btn btn-danger btn-sm">
+                            class="btn btn-danger btn-sm" ng-click="vm.deleteUser(user)">
                         <span class="glyphicon glyphicon-remove-circle"></span>
                         <span class="hidden-xs hidden-sm"></span>&nbsp;Delete user</button>
                     </button>

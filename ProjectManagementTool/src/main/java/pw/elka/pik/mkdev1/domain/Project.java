@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -54,6 +55,17 @@ public class Project implements Serializable {
     		inverseJoinColumns = {@JoinColumn(name = "board_id")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Board> boards = new HashSet<>();
+
+    @Transactional
+    public void deleteUser(String login){
+        for(User user : users){
+            if(user.getLogin().equals(login)){
+                users.remove(user);
+                membersCount--;
+                break;
+            }
+        }
+    }
 
 	public Long getId() {
 		return id;
