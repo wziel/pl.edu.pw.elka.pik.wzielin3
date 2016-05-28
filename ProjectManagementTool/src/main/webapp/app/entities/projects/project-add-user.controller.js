@@ -19,6 +19,7 @@
         vm.project = entity;
         vm.page = 1;
         vm.users = [];
+        vm.loadAll = loadAll;
 
         vm.loadAll();
 
@@ -43,7 +44,7 @@
 
         function addUser (login) {
             vm.isSaving = true;
-            ProjectMember.save({name: vm.project.name, login: login});
+            ProjectMember.save({projectId: vm.project.id, login: login});
         }
     }
 })();

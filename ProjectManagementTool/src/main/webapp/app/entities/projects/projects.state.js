@@ -89,6 +89,32 @@
                     $state.go('^');
                 });
             }]
-        });
+        })
+            .state('projects.newUser', {
+                parent: 'projects',
+                url: '{projectId}/adduser',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/projects/project-add-user-dialog.html',
+                        controller: 'ProjectAddUserDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            entity: ['Project', function(Project) {
+                                return Project.get({projectId : $stateParams.projectId});
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('projects', null, { reload: true });
+                    }, function() {
+                        $state.go('projects');
+                    });
+                }]
+            });
+        ;
     }
 })();
