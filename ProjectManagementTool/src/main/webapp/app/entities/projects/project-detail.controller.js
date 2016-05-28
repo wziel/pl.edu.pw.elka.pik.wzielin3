@@ -14,10 +14,10 @@
         vm.load = load;
         vm.project = {};
 
-        vm.load($stateParams.name);
+        vm.load($stateParams.projectId);
 
-        function load (name) {
-            Project.get({name: name}, function(result) {
+        function load (projectId) {
+            Project.get({id: projectId}, function(result) {
                 vm.project = result;
             });
         }

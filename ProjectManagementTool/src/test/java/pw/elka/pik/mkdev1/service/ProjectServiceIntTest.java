@@ -38,10 +38,11 @@ public class ProjectServiceIntTest {
     @Test
     public void createProject_Normal_ProjectFound() throws Exception {
         ///Given
-        ProjectDTO projectDTO = new ProjectDTO("forTest");
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setId(1L);
         ///When
         projectService.createProject(projectDTO);
-        Optional<ProjectDTO> project = projectService.getByName("forTest");
+        Optional<ProjectDTO> project = projectService.getById(1L);
         ///Then
         assertTrue(project.get().getMembersCount().equals(1L));
     }
@@ -49,8 +50,8 @@ public class ProjectServiceIntTest {
     @Test(expected=DataIntegrityViolationException.class)
     public void createProject_ProjectExists_() throws Exception {
         ///Given
-        ProjectDTO firstProject = new ProjectDTO("forTest", 2L);
-        ProjectDTO secondProject = new ProjectDTO("forTest", 5L);
+        ProjectDTO firstProject = new ProjectDTO(2L, "firTest", 0L, null, null, "");
+        ProjectDTO secondProject = new ProjectDTO(2L, "firTest", 0L, null, null, "");
         projectService.createProject(firstProject);
         ///When
         projectService.createProject(secondProject);

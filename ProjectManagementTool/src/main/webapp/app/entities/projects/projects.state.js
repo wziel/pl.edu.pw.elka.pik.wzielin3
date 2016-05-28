@@ -25,7 +25,7 @@
         })
             .state('project-detail', {
                 parent: 'entity',
-                url: '/projects/:name',
+                url: '/projects/:projectId',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'Project Details'

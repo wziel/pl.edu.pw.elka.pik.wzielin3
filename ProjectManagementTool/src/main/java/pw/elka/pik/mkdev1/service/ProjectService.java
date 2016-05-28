@@ -26,8 +26,8 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     @Transactional(readOnly = true)
-    public Optional<ProjectDTO> getByName(String name) {
-        return projectRepository.findOneByName(name).map(ProjectDTO::new);
+    public Optional<ProjectDTO> getById(Long id) {
+        return projectRepository.findOneById(id).map(ProjectDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -45,8 +45,8 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<ProjectDTO> getDetailsByName(String name) {
-        return projectRepository.findOneByName(name).map(p -> {
+    public Optional<ProjectDTO> getDetailsById(Long id) {
+        return projectRepository.findOneById(id).map(p -> {
             p.getUsers().size();
             p.getBoards().size();
             return p;
@@ -54,7 +54,7 @@ public class ProjectService {
     }
 
     @Transactional(readOnly = true)
-    public boolean exists(String name) {
-    	return getDetailsByName(name).isPresent();
+    public boolean exists(Long id) {
+    	return getDetailsById(id).isPresent();
     }
 }

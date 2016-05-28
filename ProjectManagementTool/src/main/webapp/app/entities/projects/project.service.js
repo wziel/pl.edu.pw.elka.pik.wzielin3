@@ -8,7 +8,7 @@
     Project.$inject = ['$resource'];
 
     function Project ($resource) {
-        var service = $resource('api/projects/:name', {}, {
+        var service = $resource('api/projects/:id', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

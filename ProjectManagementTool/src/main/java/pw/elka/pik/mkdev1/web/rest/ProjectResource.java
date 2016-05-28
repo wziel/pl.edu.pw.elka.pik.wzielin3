@@ -60,13 +60,13 @@ public class ProjectResource {
         return new ResponseEntity<>(projectDTOs, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/projects/{name}",
+    @RequestMapping(value = "/projects/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ProjectDTO> getProject(@PathVariable String name){
-        log.debug("REST request to get Project : {}", name);
-        return projectService.getDetailsByName(name)
+    public ResponseEntity<ProjectDTO> getProject(@PathVariable Long id){
+        log.debug("REST request to get Project : {}", id);
+        return projectService.getDetailsById(id)
             .map(projectDTO -> new ResponseEntity<>(projectDTO, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -77,7 +77,7 @@ public class ProjectResource {
     @Timed
     public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save Project : {}", projectDTO);
-        if (projectService.exists(projectDTO.getName())) {
+        if (projectService.exists(projectDTO.getId())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert("projectManagement", "projectexists", "Name of project already in use"))
                 .body(null);

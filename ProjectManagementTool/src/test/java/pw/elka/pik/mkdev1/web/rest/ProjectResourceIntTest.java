@@ -114,7 +114,7 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveExpectedValues() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
+        when(projectService.getDetailsById(1L)).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
@@ -122,7 +122,7 @@ public class ProjectResourceIntTest {
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
         /// When
-        restMvc.perform(get("/api/projects/test")
+        restMvc.perform(get("/api/projects/1")
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
@@ -134,7 +134,7 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveDescription() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
+        when(projectService.getDetailsById(1L)).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
@@ -142,7 +142,7 @@ public class ProjectResourceIntTest {
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
         /// When
-        restMvc.perform(get("/api/projects/test")
+        restMvc.perform(get("/api/projects/1")
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
@@ -153,7 +153,7 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveUsers() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
+        when(projectService.getDetailsById(1L)).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
@@ -161,7 +161,7 @@ public class ProjectResourceIntTest {
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
         /// When
-        restMvc.perform(get("/api/projects/test")
+        restMvc.perform(get("/api/projects/1")
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
@@ -173,7 +173,7 @@ public class ProjectResourceIntTest {
     public void getProject_ProjectExists_ReceiveBoards() throws Exception {
         /// Given
         projectService = Mockito.mock(ProjectService.class);
-        when(projectService.getDetailsByName("test")).thenReturn(testOptionalProjectDTO);
+        when(projectService.getDetailsById(1L)).thenReturn(testOptionalProjectDTO);
 
         /* Injection members of testing class */
         ProjectResource projectResource = new ProjectResource();
@@ -181,7 +181,7 @@ public class ProjectResourceIntTest {
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
         /// When
-        restMvc.perform(get("/api/projects/test")
+        restMvc.perform(get("/api/projects/1")
             .accept(MediaType.APPLICATION_JSON))
             /// Then
             .andExpect(status().isOk())
