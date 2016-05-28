@@ -57,14 +57,15 @@ public class Project implements Serializable {
     private Set<Board> boards = new HashSet<>();
 
     @Transactional
-    public void deleteUser(String login){
-        for(User user : users){
-            if(user.getLogin().equals(login)){
-                users.remove(user);
-                membersCount--;
-                break;
-            }
-        }
+    public void deleteUser(User user){
+        users.remove(user);
+        membersCount--;
+    }
+
+    @Transactional
+    public void addUser(User user){
+        users.add(user);
+        membersCount++;
     }
 
 	public Long getId() {

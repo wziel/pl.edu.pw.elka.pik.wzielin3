@@ -76,7 +76,16 @@ public class ProjectService {
 
     public void deleteUserFromProject(Long id, String login) {
         Project project = projectRepository.findOneById(id).get();
-        project.deleteUser(login);
+        User user = userRepository.findOneByLogin(login).get();
+        project.deleteUser(user);
+        projectRepository.save(project);
+        return;
+    }
+
+    public void addUserToProject(Long id, String login) {
+        Project project = projectRepository.findOneById(id).get();
+        User user = userRepository.findOneByLogin(login).get();
+        project.addUser(user);
         projectRepository.save(project);
         return;
     }

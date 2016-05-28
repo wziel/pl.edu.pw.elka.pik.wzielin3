@@ -109,4 +109,15 @@ public class ProjectResource {
         projectService.deleteUserFromProject(id, login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user " + login + " is deleted from project" + id, login)).build();
     }
+
+    @RequestMapping(value = "/projects/{id}/{login}",
+        method = RequestMethod.POST)
+    @Timed
+    @Transactional
+    public ResponseEntity<Void> addUserToProject(@PathVariable Long id, @PathVariable String login){
+        log.debug("REST request to add User to Project : {}", id + ' ' + login);
+        projectService.addUserToProject(id, login);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user " + login + " is added to project" + id, login)).build();
+    }
+
 }
