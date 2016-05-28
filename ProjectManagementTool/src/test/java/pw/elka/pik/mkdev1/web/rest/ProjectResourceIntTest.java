@@ -2,9 +2,7 @@ package pw.elka.pik.mkdev1.web.rest;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +38,7 @@ import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.ProjectRepository;
+import pw.elka.pik.mkdev1.repository.UserRepository;
 import pw.elka.pik.mkdev1.service.ProjectService;
 import pw.elka.pik.mkdev1.web.rest.dto.BoardShortDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
@@ -52,6 +51,9 @@ public class ProjectResourceIntTest {
 
     @Inject
     private ProjectRepository projectRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private ProjectService projectService;
@@ -274,10 +276,13 @@ public class ProjectResourceIntTest {
         /// Given
         projectRepository = Mockito.mock(ProjectRepository.class);
         when(projectRepository.findOneById(1L)).thenReturn(testOptionalProject);
+        userRepository = Mockito.mock(UserRepository.class);
+        when(userRepository.findOneByLogin("testLogin")).thenReturn(Optional.of(user));
 
         /* Injection members of testing class */
         ProjectService myProjectService = new ProjectService();
         ReflectionTestUtils.setField(myProjectService, "projectRepository", projectRepository);
+        ReflectionTestUtils.setField(myProjectService, "userRepository", userRepository);
         MockMvcBuilders.standaloneSetup(myProjectService);
 
         ProjectResource projectResource = new ProjectResource();
@@ -290,5 +295,35 @@ public class ProjectResourceIntTest {
         /// Then
         assertFalse(testOptionalProject.get().getUsers().contains(user));
         assertTrue(testOptionalProject.get().getUsers().contains(user1));
+    }
+
+    @Test
+    public void addUserToProject_UserExists_ReceiveProjectWithUser() throws Exception {
+        /// Given
+        User user2 = new User();
+        user2.setId(3L);
+        user2.setFirstName("testUser3");
+        user2.setLogin("testLogin3");
+
+        projectRepository = Mockito.mock(ProjectRepository.class);
+        when(projectRepository.findOneById(1L)).thenReturn(testOptionalProject);
+        userRepository = Mockito.mock(UserRepository.class);
+        when(userRepository.findOneByLogin("testLogin3")).thenReturn(Optional.of(user2));
+
+        /* Injection members of testing class */
+        ProjectService myProjectService = new ProjectService();
+        ReflectionTestUtils.setField(myProjectService, "projectRepository", projectRepository);
+        ReflectionTestUtils.setField(myProjectService, "userRepository", userRepository);
+        MockMvcBuilders.standaloneSetup(myProjectService);
+
+        ProjectResource projectResource = new ProjectResource();
+        ReflectionTestUtils.setField(projectResource, "projectService", myProjectService);
+        this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
+
+        /// When
+        restMvc.perform(post("/api/projects/1/testLogin3"));
+
+        /// Then
+        assertTrue(testOptionalProject.get().getUsers().contains(user2));
     }
 }
