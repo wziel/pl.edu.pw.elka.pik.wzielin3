@@ -19,6 +19,8 @@ public class ProjectDTO {
     private String name;
 
     private Long membersCount;
+    
+    private Long id;
 
     private Set<String> users;
 
@@ -26,37 +28,24 @@ public class ProjectDTO {
 
     private String description;
 
-    public ProjectDTO() {
-        this("", 1L, Collections.emptySet(), Collections.emptySet(), "");
-    }
-
-    public ProjectDTO(String name) {
-        this(name, 1L, Collections.emptySet(), Collections.emptySet(), "");
-    }
+    public ProjectDTO() { }
 
     public ProjectDTO(Project project) {
-        this(project.getName(), project.getMembersCount(),
+        this(project.getId(), project.getName(), project.getMembersCount(),
             project.getUsers().stream().map(User::getLogin).collect(Collectors.toSet()),
             project.getBoards().stream().map(BoardShortDTO::new).collect(Collectors.toSet()),
             project.getDescription());
     }
 
-    public ProjectDTO(String name, Long membersCount, Set<String> users, Set<BoardShortDTO> boards, String description) {
+    public ProjectDTO(Long id, String name, Long membersCount, Set<String> users, Set<BoardShortDTO> boards, String description) {
+    	this.setId(id);
         this.name = name;
         this.membersCount = membersCount;
         this.setUsers(users);
         this.setBoards(boards);
         this.description = description;
     }
-
-    public ProjectDTO(String name, Long membersCount) {
-        this(name, membersCount, Collections.emptySet(), Collections.emptySet(), "");
-    }
-
-    public ProjectDTO(String name, Long membersCount, String description){
-        this(name, membersCount, Collections.emptySet(), Collections.emptySet(), description);
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -96,6 +85,14 @@ public class ProjectDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     @Override
     public String toString() {

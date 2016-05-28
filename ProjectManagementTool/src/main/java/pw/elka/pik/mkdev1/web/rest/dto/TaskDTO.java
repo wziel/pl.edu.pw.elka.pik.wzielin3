@@ -20,13 +20,18 @@ public class TaskDTO {
     @Size(min = 1, max = 50)
     private String name;
 	
+	private Long taskListId;
+	
+	public TaskDTO() {}
+	
 	public TaskDTO(Task task) {
-		this(task.getName(), task.getId());
+		this(task.getName(), task.getId(), task.getTaskList().getId());
 		}
 		
-	public TaskDTO(String name, Long id){
+	public TaskDTO(String name, Long id, Long taskListId){
 		this.name = name;
 		this.id = id;
+		this.taskListId = taskListId;
 	}
 
 	public String getName() {
@@ -44,12 +49,20 @@ public class TaskDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Long getTaskListId() {
+		return taskListId;
+	}
+
+	public void setTaskListId(Long taskListId) {
+		this.taskListId = taskListId;
+	}
 
     @Override
 	public String toString() {
 		return "TaskDTO{" +
 	            "name='" + this.name + '\''  +
-	            "id='" + this.id.toString() + '\''  +
+	            "id='" + (this.id != null ? this.id.toString() : "") + '\''  +
             "}";
 	}
 }

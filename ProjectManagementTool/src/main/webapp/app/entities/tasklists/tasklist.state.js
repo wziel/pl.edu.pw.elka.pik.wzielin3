@@ -8,58 +8,45 @@
     stateConfig.$inject = ['$stateProvider'];
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('board-detail', {
-            parent: 'project-detail',
-            url: '/boards/:boardId',
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'Board details'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/boards/board-detail.html',
-                    controller: 'BoardController',
-                    controllerAs: 'vm'
-                }
-            }
-        }).state('board-new', {
-            parent: 'project-detail',
-            url: '/new',
+        $stateProvider.state('board-detail.list-new', {
+            parent: 'board-detail',
+            url: '/lists/new',
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/boards/board-edit.html',
-                    controller: 'BoardEditController',
+                    templateUrl: 'app/entities/tasklists/tasklist-edit.html',
+                    controller: 'TaskListEditController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        entity: [ function () {
                             return { 
                             	id: null, 
                             	name: null,
-                            	projectId: $stateParams.projectId
+                            	boardId: $stateParams.boardId,
+                            	tasks: []
                             };
-                        }
+                        }]
                     }
                 }).result.then(function() {
-                    $state.go('project-detail', null, { reload: true });
+                    $state.go('board-detail', null, { reload: true });
                 }, function() {
-                    $state.go('project-detail');
+                    $state.go('board-detail');
                 });
             }]
-        }).state('board-edit', {
+        }).state('board-detail.list-edit', {
             parent: 'board-detail',
-            url: '/edit',
+            url: '/lists/{taskListId}/edit',
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
-                    templateUrl: 'app/entities/boards/board-edit.html',
-                    controller: 'BoardEditController',
+                    templateUrl: 'app/entities/tasklists/tasklist-edit.html',
+                    controller: 'TaskListEditController',
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: [ 'Board', function(Board) {
-                            return Board.get({boardId : $stateParams.boardId});
+                        entity: [ 'TaskList', function(TaskList) {
+                            return TaskList.get({taskListId : $stateParams.taskListId});
                         }]
                     }
                 }).result.then(function() {

@@ -34,10 +34,19 @@ public class TaskList implements Serializable {
     @OneToMany
     @JoinTable(
         name = "task_list_task",
-        joinColumns = {@JoinColumn(name = "task_list_id")},
-        inverseJoinColumns = {@JoinColumn(name = "task_id")})
+        joinColumns = {@JoinColumn(name = "task_list_id", nullable = false)},
+        inverseJoinColumns = {@JoinColumn(name = "task_id", nullable = false)})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Task> tasks = new HashSet<>();
+    
+    @JsonIgnore
+    @OneToOne
+    @JoinTable(
+        name = "board_task_list",
+        joinColumns = {@JoinColumn(name = "task_list_id", nullable = false)},
+        inverseJoinColumns = {@JoinColumn(name = "board_id", nullable = false)})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Board board;
 
 	public Long getId() {
 		return id;
@@ -62,4 +71,12 @@ public class TaskList implements Serializable {
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
+    
+	public Board  getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 }

@@ -1,10 +1,13 @@
 package pw.elka.pik.mkdev1.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import pw.elka.pik.mkdev1.domain.Authority;
 import pw.elka.pik.mkdev1.domain.TaskList;
 import pw.elka.pik.mkdev1.domain.User;
 import pw.elka.pik.mkdev1.repository.TaskListRepository;
 import pw.elka.pik.mkdev1.repository.UserRepository;
+import pw.elka.pik.mkdev1.security.AuthoritiesConstants;
 import pw.elka.pik.mkdev1.service.MailService;
 import pw.elka.pik.mkdev1.service.TaskListService;
 import pw.elka.pik.mkdev1.web.rest.dto.ManagedUserDTO;
@@ -34,20 +37,40 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class TaskListResource {
-//	
-//    private final Logger log = LoggerFactory.getLogger(TaskListResource.class);
-//
-//    @Inject
-//    private TaskListService taskListService;
-//
-//    @RequestMapping(value = "/tasklists/{id}",
-//            method = RequestMethod.GET,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//        @Timed
-//        public ResponseEntity<TaskListDTO> getTaskList(@PathVariable Long id){
-//            log.debug("REST request to get TaskList : {}", id);
-//            return taskListService.getDetailsById(id)
-//                .map(taskListDTO -> new ResponseEntity<>(taskListDTO, HttpStatus.OK))
-//                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//        }
+	@Inject
+	private TaskListService taskListService;
+
+
+    @RequestMapping(value = "/tasklists/{taskListId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> getTaskList(@PathVariable Long taskListId){
+        return taskListService.getById(taskListId)
+            .map(taskListDTO -> new ResponseEntity<>(taskListDTO, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
+    @RequestMapping(value = "/tasklists",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<?> createTaskList(@RequestBody TaskListDTO taskListDTO, HttpServletRequest request) throws URISyntaxException {
+        taskListService.create(taskListDTO);
+        return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tasklists",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<?> updateTaskList(@RequestBody TaskListDTO taskListDTO) {
+    	if(taskListService.exists(taskListDTO.getId())) {
+    		taskListService.update(taskListDTO);
+        	return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

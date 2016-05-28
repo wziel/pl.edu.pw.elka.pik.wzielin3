@@ -1,12 +1,12 @@
 <div>
 
-    <h2>Your projects</h2>
-
-    <p>
-        <button type="button" class="btn btn-primary" ui-sref="projects.new" ><span class="glyphicon glyphicon-plus"></span>&nbsp;Create Project</button>
-        <button type="button" class="btn btn-primary" ng-click="vm.refresh()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span>Refresh</span>
-        </button>
-    </p>
+    <h2>
+    	Your projects
+		<span class="pull-right">
+	        <button type="button" class="btn btn-success" ui-sref="projects.new" ><span class="glyphicon glyphicon-plus"></span></button>
+	        <button type="button" class="btn btn-primary" ng-click="vm.refresh()"><span class="glyphicon glyphicon-refresh"></span></button>
+		</span>
+	</h2>
 
     <table class="table table-striped">
         <thead>
@@ -20,13 +20,13 @@
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                ui-sref="project-detail({name:project.name})"
+                                ui-sref="project-detail({projectId:project.id})"
                                 class="btn btn-info btn-sm">
                             <span class="glyphicon glyphicon-eye-open"></span>
                             <span class="hidden-xs hidden-sm"></span>
                         </button>
                         <button type="submit"
-                                ui-sref="projects.modify({name:project.name})"
+                                ui-sref="projects.edit({projectId:project.id})"
                                 class="btn btn-primary btn-sm">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <span class="hidden-xs hidden-sm"></span>

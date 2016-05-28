@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Asia (generated)" id="1464442615059-1">
+        <createTable tableName="board">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="boardPK"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-2">
+        <createTable tableName="board_project">
+            <column name="project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="board_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-3">
+        <createTable tableName="board_task_list">
+            <column name="board_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_list_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-4">
+        <createTable tableName="jhi_user_project">
+            <column name="project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-5">
+        <createTable tableName="project">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="projectPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="members_count" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-6">
+        <createTable tableName="task">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="taskPK"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-7">
+        <createTable tableName="task_list">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="task_listPK"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-8">
+        <createTable tableName="task_list_task">
+            <column name="task_list_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-9">
+        <addPrimaryKey columnNames="project_id, board_id" tableName="board_project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-10">
+        <addPrimaryKey columnNames="board_id, task_list_id" tableName="board_task_list"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-11">
+        <addPrimaryKey columnNames="project_id, user_id" tableName="jhi_user_project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-12">
+        <addPrimaryKey columnNames="task_list_id, task_id" tableName="task_list_task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-13">
+        <addUniqueConstraint columnNames="board_id" tableName="board_project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-14">
+        <addUniqueConstraint columnNames="task_list_id" tableName="board_task_list"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-15">
+        <addUniqueConstraint columnNames="task_id" tableName="task_list_task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-16">
+        <addUniqueConstraint columnNames="name" constraintName="UC_PROJECTNAME_COL" tableName="project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-17">
+        <addForeignKeyConstraint baseColumnNames="board_id" baseTableName="board_project" constraintName="FK_3lqei45m1d2780gync4tcqt55" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="board"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-18">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="jhi_user_project" constraintName="FK_5vrk5jwk743o2j4un5158r4ut" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-19">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_project" constraintName="FK_7swyl29ju0ap453k6q1xj06xd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-20">
+        <addForeignKeyConstraint baseColumnNames="task_id" baseTableName="task_list_task" constraintName="FK_8isuw78qgtqxlmanqi2vgn656" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-21">
+        <addForeignKeyConstraint baseColumnNames="board_id" baseTableName="board_task_list" constraintName="FK_8tie52gldqg8y09e1hctunc8a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="board"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-22">
+        <addForeignKeyConstraint baseColumnNames="task_list_id" baseTableName="board_task_list" constraintName="FK_dfdjc262arptwk8vdoytyui94" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="task_list"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-23">
+        <addForeignKeyConstraint baseColumnNames="task_list_id" baseTableName="task_list_task" constraintName="FK_n7btfajfc4np76stwbnxtwvgs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="task_list"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-24">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="board_project" constraintName="FK_ohocyl0h5vfbppu7xcigbxayk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="project"/>
+    </changeSet>
+    <changeSet author="Asia (generated)" id="1464442615059-25">
+        <dropNotNullConstraint columnDataType="varchar(100)" columnName="email" tableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

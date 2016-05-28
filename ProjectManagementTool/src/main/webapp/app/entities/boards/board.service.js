@@ -8,7 +8,7 @@
     Board.$inject = ['$resource'];
 
     function Board ($resource) {
-        var service = $resource('api/boards/:id', {}, {
+        var service = $resource('api/boards/:boardId', {}, {
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

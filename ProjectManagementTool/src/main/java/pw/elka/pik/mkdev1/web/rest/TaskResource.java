@@ -1,16 +1,19 @@
 package pw.elka.pik.mkdev1.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import pw.elka.pik.mkdev1.domain.Board;
+
+import pw.elka.pik.mkdev1.domain.Authority;
+import pw.elka.pik.mkdev1.domain.TaskList;
 import pw.elka.pik.mkdev1.domain.User;
-import pw.elka.pik.mkdev1.repository.BoardRepository;
+import pw.elka.pik.mkdev1.repository.TaskListRepository;
 import pw.elka.pik.mkdev1.repository.UserRepository;
+import pw.elka.pik.mkdev1.security.AuthoritiesConstants;
 import pw.elka.pik.mkdev1.service.MailService;
-import pw.elka.pik.mkdev1.service.BoardService;
+import pw.elka.pik.mkdev1.service.TaskListService;
+import pw.elka.pik.mkdev1.service.TaskService;
 import pw.elka.pik.mkdev1.web.rest.dto.ManagedUserDTO;
-import pw.elka.pik.mkdev1.web.rest.dto.ProjectDTO;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskDTO;
 import pw.elka.pik.mkdev1.web.rest.dto.TaskListDTO;
-import pw.elka.pik.mkdev1.web.rest.dto.BoardDTO;
 import pw.elka.pik.mkdev1.web.rest.util.HeaderUtil;
 import pw.elka.pik.mkdev1.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -34,43 +37,40 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class BoardResource {
-	
-    private final Logger log = LoggerFactory.getLogger(BoardResource.class);
+public class TaskResource {
+	@Inject
+	private TaskService taskService;
 
-    @Inject
-    private BoardService boardService;
 
-    @RequestMapping(value = "/boards/{boardId}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-        @Timed
-        public ResponseEntity<BoardDTO> getBoard(@PathVariable Long boardId){
-            log.debug("REST request to get Board : {}", boardId);
-            return boardService.getDetailsById(boardId)
-                .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        }
+    @RequestMapping(value = "/tasks/{taskId}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> getTask(@PathVariable Long taskId){
+        return taskService.getById(taskId)
+            .map(taskListDTO -> new ResponseEntity<>(taskListDTO, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
     
-    @RequestMapping(value = "/boards",
+    @RequestMapping(value = "/tasks",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> createBoard(@RequestBody BoardDTO boardDTO, HttpServletRequest request) throws URISyntaxException {
-        boardService.create(boardDTO);
-        return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+    public ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO, HttpServletRequest request) throws URISyntaxException {
+    	taskService.create(taskDTO);
+        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/boards",
+    @RequestMapping(value = "/tasks",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> updateBoard(@RequestBody BoardDTO boardDTO) {
-    	if(boardService.exists(boardDTO.getId())) {
-    		boardService.update(boardDTO);
-        	return new ResponseEntity<>(boardDTO, HttpStatus.OK);
+    public ResponseEntity<?> updateTask(@RequestBody TaskDTO taskDTO) {
+    	if(taskService.exists(taskDTO.getId())) {
+    		taskService.update(taskDTO);
+        	return new ResponseEntity<>(taskDTO, HttpStatus.OK);
     	}
     	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

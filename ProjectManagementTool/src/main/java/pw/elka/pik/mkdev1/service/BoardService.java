@@ -1,5 +1,6 @@
 package pw.elka.pik.mkdev1.service;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.repository.BoardRepository;
+import pw.elka.pik.mkdev1.repository.ProjectRepository;
 import pw.elka.pik.mkdev1.web.rest.dto.BoardDTO;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskListDTO;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -21,6 +24,8 @@ public class BoardService {
 
     @Inject
     private BoardRepository boardRepository;
+    @Inject
+    private ProjectRepository projectRepository;
 
     @Transactional(readOnly = true)
     public Optional<BoardDTO> getById(Long id) {
@@ -30,8 +35,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Optional<BoardDTO> getDetailsById(Long id) {
         return boardRepository.findOneById(id).map(b -> {
-        	b.getTaskLists().forEach(t->{t.getTasks().size();
-        	});
+        	b.getTaskLists().forEach(t-> t.getTasks().size());
             b.getTaskLists().size();                    
             return b;
         }).map(BoardDTO::new);
@@ -46,4 +50,21 @@ public class BoardService {
     public boolean exists(Long id) {
     	return getDetailsById(id).isPresent();
     }
+    
+	public void create(BoardDTO boardDTO) {
+		projectRepository.findOneById(boardDTO.getProjectId()).ifPresent(project -> {
+			Board board = new Board();
+			board.setName(boardDTO.getName());
+			boardRepository.save(board);
+			project.getBoards().add(board);
+			projectRepository.save(project);
+		});
+	}
+	
+	public void update(BoardDTO boardDTO) {
+		boardRepository.findOneById(boardDTO.getId()).ifPresent(board -> {
+			board.setName(boardDTO.getName());;
+			boardRepository.save(board);
+		});
+	}
 }

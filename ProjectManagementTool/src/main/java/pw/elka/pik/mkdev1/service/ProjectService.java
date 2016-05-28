@@ -35,8 +35,8 @@ public class ProjectService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Optional<ProjectDTO> getByName(String name) {
-        return projectRepository.findOneByName(name).map(ProjectDTO::new);
+    public Optional<ProjectDTO> getById(Long id) {
+        return projectRepository.findOneById(id).map(ProjectDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -55,35 +55,34 @@ public class ProjectService {
     }
 
     public ResponseEntity<ProjectDTO> modifyProject(ProjectDTO projectDTO) {
-        return projectRepository.findOneByName(projectDTO.getName())
+        return projectRepository.findOneById(projectDTO.getId())
             .map(project -> {
                 project.setDescription(projectDTO.getDescription());
                 return ResponseEntity.ok()
                     .headers(HeaderUtil.createAlert("A project is updated with identifier " + projectDTO.getName(), projectDTO.getName()))
-                    .body(new ProjectDTO(projectRepository
-                        .findOneByName(projectDTO.getName()).get()));
+                    .body(new ProjectDTO(project));
             })
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Transactional(readOnly = true)
-    public Optional<ProjectDTO> getDetailsByName(String name) {
-        return projectRepository.findOneByName(name).map(p -> {
+    public Optional<ProjectDTO> getDetailsById(Long id) {
+        return projectRepository.findOneById(id).map(p -> {
             p.getUsers().size();
             p.getBoards().size();
             return p;
         }).map(ProjectDTO::new);
     }
 
-    public void deleteUserFromProject(String name, String login) {
-        Project project = projectRepository.findOneByName(name).get();
+    public void deleteUserFromProject(Long id, String login) {
+        Project project = projectRepository.findOneById(id).get();
         project.deleteUser(login);
         projectRepository.save(project);
         return;
     }
 
     @Transactional(readOnly = true)
-    public boolean exists(String name) {
-        return getDetailsByName(name).isPresent();
+    public boolean exists(Long id) {
+    	return getDetailsById(id).isPresent();
     }
 }

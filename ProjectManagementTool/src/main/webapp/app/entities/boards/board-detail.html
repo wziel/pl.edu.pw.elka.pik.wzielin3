@@ -1,9 +1,9 @@
 <div>
 	<style>
 		.taskList {
-			background-color: lightcoral;
+			background-color: lightblue;
 			height: 30em;
-			width: 20em;
+			width: 18em;
 			overflow-y: auto;
 			margin-left: 5px;
 		}
@@ -17,24 +17,43 @@
 			white-space: nowrap
 		}
 	</style>
-	<h2>
-		<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
-	</h2>
+	<div>
+		<h2>
+			<span class="pull-right">
+				<button type="button" ui-sref="board-edit({boardId: vm.board.id})"
+					class="btn btn-primary btn-sm">
+					<span class="glyphicon glyphicon-pencil"></span>
+				</button>
+		        <button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.list-new">
+		        	<span class="glyphicon glyphicon-plus"></span>
+		        </button>
+			</span>
+			<span>Board</span> {{vm.board.name}} for project {{vm.projectName}}
+		</h2>
+	</div>
 	<div class="board">
 		<ul class="list-inline">
-			<li class="taskList well well-sm" ng-repeat="list in vm.board.taskLists">
-				<h4>{{list.name}}</h4>
+			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists">
+				<h3>
+					<span class="pull-right">
+	        			<button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
+	        				<span class="glyphicon glyphicon-pencil"></span>
+	        			</button>
+	        			<button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.task-new({taskListId:taskList.id})" >
+	        				<span class="glyphicon glyphicon-plus"></span>
+	        			</button>
+					</span>
+					<span>{{taskList.name}}</span>
+				</h3>
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="task in list.tasks">
-						<span>{{task.name}}</span>
-					</li>
-				</ul>
-			</li>
-			<li class="taskList well well-sm" ng-repeat="list in vm.board.taskLists">
-				<h4>{{list.name}}</h4>
-				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="task in list.tasks">
-						<span>{{task.name}}</span>
+					<li class="list-group-item" ng-repeat="task in taskList.tasks">
+						<div>
+							<button ui-sref="board-detail.task-edit({taskListId: taskList.id, taskId: task.id})"
+								class="btn btn-primary btn-xs pull-right">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+							<span style="overflow:hidden">{{task.name}}</span>
+						</div>
 					</li>
 				</ul>
 			</li>

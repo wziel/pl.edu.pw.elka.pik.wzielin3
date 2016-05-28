@@ -33,10 +33,10 @@
 				<th>Members</th>
 				<th class="text-right">
                     <button type="submit"
-                            ui-sref="project-detail({name:project.name})"
-                            class="btn btn-info btn-sm">
+                            ui-sref="project-detail({projectId: vm.project.id})"
+                            class="btn btn-success btn-sm">
                         <span class="glyphicon glyphicon-plus"></span>
-                        <span class="hidden-xs hidden-sm"></span>&nbsp;Add user</button>
+                        <span class="hidden-xs hidden-sm"></span></button>
                 </th>
 			</tr>
 		</thead>
@@ -57,17 +57,31 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>Boards</th>
+				<th>
+					<span>Boards</span>
+				</th>
+				<th>
+					<button type="button" ui-sref="board-new"
+						class="btn btn-success btn-sm pull-right">
+						<span class="glyphicon glyphicon-plus"></span>
+					</button>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="board in vm.project.boards">
 				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{board.name}}</span></td>
 				<td>
-					<button type="button" ui-sref="board-detail({id:{{board.id}}})"
-						class="btn btn-info" style="float:right">
-						<span>Details</span>
-					</button>
+					<div class="pull-right">
+						<button type="button" ui-sref="board-detail({boardId:{{board.id}}})"
+							class="btn btn-info btn-sm" style="float:right">
+							<span class="glyphicon glyphicon-eye-open"></span>
+						</button>
+						<button type="button" ui-sref="board-edit({boardId: board.id})"
+							class="btn btn-primary btn-sm">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+					</div>
 				</td>
 			</tr>
 		</tbody>

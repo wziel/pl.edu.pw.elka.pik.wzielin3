@@ -30,6 +30,15 @@ public class Task implements Serializable {
     @Column(length = 50, unique = false, nullable = false)
     private String name;
     
+    @JsonIgnore
+    @OneToOne
+    @JoinTable(
+        name = "task_list_task",
+        joinColumns = {@JoinColumn(name = "task_id", nullable = false)},
+        inverseJoinColumns = {@JoinColumn(name = "task_list_id", nullable = false)})
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private TaskList taskList;
+    
 	public Long getId() {
 		return id;
 	}
@@ -44,5 +53,13 @@ public class Task implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public TaskList getTaskList() {
+		return taskList;
+	}
+
+	public void setTaskList(TaskList taskList) {
+		this.taskList = taskList;
 	}
 }

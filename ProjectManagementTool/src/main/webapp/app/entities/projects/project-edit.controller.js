@@ -7,19 +7,18 @@
 
     angular
         .module('projectManagementToolApp')
-        .controller('ProjectsNewProjectDialogController', ProjectsNewProjectDialogController);
+        .controller('ProjectEditController', ProjectEditController);
 
-    ProjectsNewProjectDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'Project'];
+    ProjectEditController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'Project'];
 
-    function ProjectsNewProjectDialogController ($stateParams, $uibModalInstance, entity, Project) {
+    function ProjectEditController ($stateParams, $uibModalInstance, entity, Project) {
         var vm = this;
 
         vm.clear = clear;
         vm.languages = null;
         vm.save = save;
         vm.project = entity;
-
-
+        vm.isEdit = isEdit();
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
@@ -36,7 +35,16 @@
 
         function save () {
             vm.isSaving = true;
-            Project.save(vm.project, onSaveSuccess, onSaveError);
+            if(isEdit()) {
+            	Project.update(vm.project, onSaveSuccess, onSaveError);
+            }
+            else {
+            	Project.save(vm.project, onSaveSuccess, onSaveError);	
+            }
+        }
+        
+        function isEdit() {
+        	return vm.project.id !== null;
         }
     }
 })();

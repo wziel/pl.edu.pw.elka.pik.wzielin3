@@ -23,72 +23,72 @@
                 }
             }
         })
-            .state('project-detail', {
-                parent: 'entity',
-                url: '/projects/:name',
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'Project Details'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'app/entities/projects/project-detail.html',
-                        controller: 'ProjectController',
-                        controllerAs: 'vm'
-                    }
+        .state('project-detail', {
+            parent: 'entity',
+            url: '/projects/:projectId',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'Project Details'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/projects/project-detail.html',
+                    controller: 'ProjectController',
+                    controllerAs: 'vm'
                 }
-            })
-            .state('projects.new', {
-                parent: 'projects',
-                url: '/new',
-                data: {
-                    authorities: ['ROLE_USER']
-                },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                    $uibModal.open({
-                        templateUrl: 'app/entities/projects/projects-new-project-dialog.html',
-                        controller: 'ProjectsNewProjectDialogController',
-                        controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
-                        resolve: {
-                            entity: function () {
-                                return {
-                                    name: null, membersCount: null, description: null
-                                };
-                            }
+            }
+        })
+        .state('projects.new', {
+            parent: 'projects',
+            url: '/new',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/projects/project-edit.html',
+                    controller: 'ProjectEditController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: function () {
+                            return {
+                                name: null, membersCount: null, description: null, id: null
+                            };
                         }
-                    }).result.then(function() {
-                        $state.go('projects', null, { reload: true });
-                    }, function() {
-                        $state.go('projects');
-                    });
-                }]
-            })
-            .state('projects.modify', {
-                parent: 'projects',
-                url: '/{name}/modify',
-                data: {
-                    authorities: ['ROLE_USER']
-                },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                    $uibModal.open({
-                        templateUrl: 'app/entities/projects/project-modify-dialog.html',
-                        controller: 'ProjectModifyProjectDialogController',
-                        controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
-                        resolve: {
-                            entity: ['Project', function(Project) {
-                                return Project.get({name : $stateParams.name});
-                            }]
-                        }
-                    }).result.then(function() {
-                        $state.go('projects', null, { reload: true });
-                    }, function() {
-                        $state.go('^');
-                    });
-                }]
-            });
+                    }
+                }).result.then(function() {
+                    $state.go('projects', null, { reload: true });
+                }, function() {
+                    $state.go('projects');
+                });
+            }]
+        })
+        .state('projects.edit', {
+            parent: 'projects',
+            url: '/{projectId}/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/projects/project-edit.html',
+                    controller: 'ProjectEditController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Project', function(Project) {
+                            return Project.get({projectId : $stateParams.projectId});
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('projects', null, { reload: true });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        });
     }
 })();

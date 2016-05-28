@@ -3,12 +3,12 @@
 
     angular
         .module('projectManagementToolApp')
-        .factory('Project', Project);
+        .factory('Task', Task);
 
-    Project.$inject = ['$resource'];
+    Task.$inject = ['$resource'];
 
-    function Project ($resource) {
-        var service = $resource('api/projects/:id', {}, {
+    function Task($resource) {
+        var service = $resource('api/tasks/:taskId', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

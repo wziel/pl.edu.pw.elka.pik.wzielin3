@@ -33,6 +33,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import pw.elka.pik.mkdev1.ProjectManagementToolApp;
 import pw.elka.pik.mkdev1.domain.Board;
+import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.TaskList;
 import pw.elka.pik.mkdev1.domain.Task;
 import pw.elka.pik.mkdev1.repository.BoardRepository;
@@ -57,6 +58,7 @@ public class BoardResourceIntTest {
     private Optional<BoardDTO> testOptionalBoardDTO;
     private BoardDTO testBoardDTO;
     private Board testBoard;
+    private Project project;
 
     @Before
     public void setUp() {
@@ -90,16 +92,29 @@ public class BoardResourceIntTest {
         taskList1.setTasks(tasks1);
         taskLists.add(taskList1);
         
+        task1.setTaskList(taskList1);
+        task2.setTaskList(taskList1);
+        
         TaskList taskList2 = new TaskList();
         taskList2.setId(2L);
         taskList2.setName("Finished");
         taskList2.setTasks(tasks2);
         taskLists.add(taskList2);
         
+        task3.setTaskList(taskList2);
+        task4.setTaskList(taskList2);
+        
+        project = new Project();
+        project.setId(1L);
+        
         testBoard = new Board();
         testBoard.setId(1L);
         testBoard.setName("User Stories");
         testBoard.setTaskLists(taskLists);
+        testBoard.setProject(project);
+        
+        taskList1.setBoard(testBoard);
+        taskList2.setBoard(testBoard);
         
         testBoardDTO = new BoardDTO(testBoard);
         testOptionalBoardDTO = Optional.of(testBoardDTO);

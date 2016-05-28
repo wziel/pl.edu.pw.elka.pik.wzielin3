@@ -42,8 +42,8 @@ public class Project implements Serializable {
     @ManyToMany
     @JoinTable(
         name = "jhi_user_project",
-        joinColumns = {@JoinColumn(name = "project_id")},
-        inverseJoinColumns = {@JoinColumn(name = "user_id")})
+        joinColumns = {@JoinColumn(name = "project_id", nullable = false)},
+        inverseJoinColumns = {@JoinColumn(name = "user_id", nullable = false)})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<User> users = new HashSet<>();
 
@@ -51,8 +51,8 @@ public class Project implements Serializable {
     @OneToMany
     @JoinTable(
     		name="board_project",
-    		joinColumns = {@JoinColumn(name = "project_id")},
-    		inverseJoinColumns = {@JoinColumn(name = "board_id")})
+    		joinColumns = {@JoinColumn(name = "project_id", nullable = false)},
+    		inverseJoinColumns = {@JoinColumn(name = "board_id", nullable = false)})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Board> boards = new HashSet<>();
 

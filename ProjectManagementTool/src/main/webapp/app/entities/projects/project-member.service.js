@@ -8,8 +8,8 @@
     ProjectMember.$inject = ['$resource'];
 
     function ProjectMember ($resource) {
-        var service = $resource('api/projects/:name/:login', {
-            name: "@name",
+        var service = $resource('api/projects/:projectId/:login', {
+        	projectId: "@projectId",
             login: "@login"
         }, {
             'query': {method: 'GET', isArray: true},
