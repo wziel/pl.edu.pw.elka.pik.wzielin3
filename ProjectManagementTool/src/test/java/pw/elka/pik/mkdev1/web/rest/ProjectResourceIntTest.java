@@ -203,7 +203,7 @@ public class ProjectResourceIntTest {
         ReflectionTestUtils.setField(projectResource, "projectService", projectService);
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
         ///When
-        restMvc.perform(get("/api/projects/unknown")
+        restMvc.perform(get("/api/projects/8")
             .accept(MediaType.APPLICATION_JSON))
             ///Then
             .andExpect(status().isNotFound());

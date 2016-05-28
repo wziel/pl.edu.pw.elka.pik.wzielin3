@@ -40,6 +40,7 @@ public class ProjectServiceIntTest {
         ///Given
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(1L);
+        projectDTO.setName("Nowy projekt");
         ///When
         projectService.createProject(projectDTO);
         Optional<ProjectDTO> project = projectService.getById(1L);

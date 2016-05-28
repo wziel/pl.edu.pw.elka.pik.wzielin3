@@ -34,8 +34,8 @@ public class Task implements Serializable {
     @OneToOne
     @JoinTable(
         name = "task_list_task",
-        joinColumns = {@JoinColumn(name = "task_id")},
-        inverseJoinColumns = {@JoinColumn(name = "task_list_id")})
+        joinColumns = {@JoinColumn(name = "task_id", nullable = false)},
+        inverseJoinColumns = {@JoinColumn(name = "task_list_id", nullable = false)})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private TaskList taskList;
     
