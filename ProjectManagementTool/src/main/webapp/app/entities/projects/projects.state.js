@@ -25,7 +25,7 @@
         })
         .state('project-detail', {
             parent: 'entity',
-            url: '/projects/:projectId',
+            url: '/projects/{projectId}',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Project Details'
@@ -109,9 +109,9 @@
                             }]
                         }
                     }).result.then(function() {
-                        $state.go('projects', null, { reload: true });
+                        $state.go('projects.edit', null, { reload: true });
                     }, function() {
-                        $state.go('projects');
+                        $state.go('projects.edit');
                     });
                 }]
             });

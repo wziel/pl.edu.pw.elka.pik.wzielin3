@@ -18,7 +18,7 @@
         vm.load($stateParams.projectId);
 
         function load (projectId) {
-            Project.get({id: projectId}, function(result) {
+            Project.get({projectId: projectId}, function(result) {
                 vm.project = result;
             });
         }
