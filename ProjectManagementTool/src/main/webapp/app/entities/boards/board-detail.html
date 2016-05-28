@@ -39,7 +39,7 @@
 	        			<button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
 	        				<span class="glyphicon glyphicon-pencil"></span>
 	        			</button>
-	        			<button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.task-new" >
+	        			<button type="button" class="btn btn-success btn-sm" ui-sref="board-detail.task-new({taskListId:taskList.id})" >
 	        				<span class="glyphicon glyphicon-plus"></span>
 	        			</button>
 					</span>
@@ -48,11 +48,11 @@
 				<ul class="list-group">
 					<li class="list-group-item" ng-repeat="task in taskList.tasks">
 						<div>
-							<button ui-sref="board-detail.task-edit({taskId: task.id})"
+							<button ui-sref="board-detail.task-edit({taskListId: taskList.id, taskId: task.id})"
 								class="btn btn-primary btn-xs pull-right">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</button>
-							{{task.name}}
+							<span style="overflow:hidden">{{task.name}}</span>
 						</div>
 					</li>
 				</ul>

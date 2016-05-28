@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.domain.Project;
+import pw.elka.pik.mkdev1.domain.Task;
 import pw.elka.pik.mkdev1.domain.TaskList;
 import pw.elka.pik.mkdev1.repository.TaskListRepository;
 import pw.elka.pik.mkdev1.repository.TaskRepository;
@@ -27,13 +28,29 @@ public class TaskService {
     private final Logger log = LoggerFactory.getLogger(BoardService.class);
     @Inject
     private TaskRepository taskRepository;
+    @Inject
+    private TaskListRepository taskListRepository;
     
 	public void create(TaskDTO taskDTO) {
-		throw new NotImplementedException();
+		taskListRepository.findOneById(taskDTO.getTaskListId()).ifPresent(list -> {
+			final Task task = new Task();
+			task.setName(taskDTO.getName());
+			taskRepository.save(task);
+			list.getTasks().add(task);
+			taskListRepository.save(list);
+		});
 	}
 	
 	public void update(TaskDTO taskDTO) {
-		throw new NotImplementedException();
+		taskRepository.findOneById(taskDTO.getId()).ifPresent(task -> {
+			task.setName(taskDTO.getName());
+			final long oldListId = task.getTaskList().getId();
+			final long newListId = taskDTO.getTaskListId();
+			if(oldListId != newListId) {
+				taskListRepository.findOneById(oldListId).ifPresent(list -> list.getTasks().remove(task));
+				taskListRepository.findOneById(newListId).ifPresent(list -> list.getTasks().add(task));
+			}
+		});
 	}
 
 	public boolean exists(Long id) {
