@@ -19,9 +19,14 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
-                            return { id: null, name: null };
-                        }
+                        entity: [ function () {
+                            return { 
+                            	id: null, 
+                            	name: null,
+                            	boardId: $stateParams.boardId,
+                            	tasks: []
+                            };
+                        }]
                     }
                 }).result.then(function() {
                     $state.go('board-detail', null, { reload: true });

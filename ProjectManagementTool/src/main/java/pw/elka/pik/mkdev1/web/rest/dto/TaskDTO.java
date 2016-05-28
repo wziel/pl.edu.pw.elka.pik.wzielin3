@@ -54,7 +54,7 @@ public class TaskDTO {
 		return taskListId;
 	}
 
-	public void setTaskListDTO(Long taskListId) {
+	public void setTaskListId(Long taskListId) {
 		this.taskListId = taskListId;
 	}
 

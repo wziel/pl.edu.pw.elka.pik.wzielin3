@@ -34,7 +34,11 @@
                     size: 'lg',
                     resolve: {
                         entity: function () {
-                            return { id: null, name: null };
+                            return { 
+                            	id: null, 
+                            	name: null,
+                            	
+                            };
                         }
                     }
                 }).result.then(function() {

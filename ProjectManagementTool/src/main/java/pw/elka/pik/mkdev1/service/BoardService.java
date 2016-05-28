@@ -32,8 +32,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Optional<BoardDTO> getDetailsById(Long id) {
         return boardRepository.findOneById(id).map(b -> {
-        	b.getTaskLists().forEach(t->{t.getTasks().size();
-        	});
+        	b.getTaskLists().forEach(t-> t.getTasks().size());
             b.getTaskLists().size();                    
             return b;
         }).map(BoardDTO::new);

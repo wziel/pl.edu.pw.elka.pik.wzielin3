@@ -35,7 +35,7 @@ public class TaskListDTO {
     	this.name = name;
     	this.id = id;
     	this.tasks = tasks;
-    	this.boardId = boardId;
+    	this.setBoardId(boardId);
     }
 
 	public String getName() {
@@ -67,5 +67,13 @@ public class TaskListDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(Long boardId) {
+		this.boardId = boardId;
 	}
 }
