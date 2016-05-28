@@ -24,7 +24,7 @@
         }
 
         function deleteUser(login) {
-            ProjectMember.delete({name: vm.project.name, login: login},
+            ProjectMember.delete({projectId: vm.project.id, login: login},
             function(){
                 $state.reload();
             });

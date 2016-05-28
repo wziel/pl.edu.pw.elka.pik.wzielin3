@@ -285,7 +285,7 @@ public class ProjectResourceIntTest {
         this.restMvc = MockMvcBuilders.standaloneSetup(projectResource).build();
 
         /// When
-        restMvc.perform(delete("/api/projects/test/testLogin"));
+        restMvc.perform(delete("/api/projects/1/testLogin"));
 
         /// Then
         assertFalse(testOptionalProject.get().getUsers().contains(user));

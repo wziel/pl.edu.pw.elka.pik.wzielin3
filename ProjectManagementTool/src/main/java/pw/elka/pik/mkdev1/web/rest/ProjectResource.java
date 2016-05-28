@@ -108,6 +108,5 @@ public class ProjectResource {
         log.debug("REST request to delete User from Project : {}", id + ' ' + login);
         projectService.deleteUserFromProject(id, login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A user " + login + " is deleted from project" + id, login)).build();
-
     }
 }
