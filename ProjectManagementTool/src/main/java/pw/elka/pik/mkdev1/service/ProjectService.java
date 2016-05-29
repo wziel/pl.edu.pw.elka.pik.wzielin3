@@ -46,10 +46,11 @@ public class ProjectService {
     }
 
     public void createProject(ProjectDTO projectDTO) {
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         Project project = new Project();
         project.setName(projectDTO.getName());
-        project.setMembersCount(1L);
         project.setDescription(projectDTO.getDescription());
+        project.addUser(user);
         projectRepository.save(project);
         log.debug("Created Information for project: {}", project);
     }
