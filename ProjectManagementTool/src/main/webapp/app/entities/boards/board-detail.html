@@ -19,8 +19,11 @@
 	</style>
 	<div>
 		<h2>
-			<span class="pull-right">
-				<button type="button" ui-sref="board-edit({boardId: vm.board.id})"
+			<span class="btn-group pull-right">
+				<button type="submit" ui-sref="project-detail" class="btn btn-info btn-sm">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+				</button>
+				<button type="button" ui-sref="board-detail.edit({boardId: vm.board.id})"
 					class="btn btn-primary btn-sm">
 					<span class="glyphicon glyphicon-pencil"></span>
 				</button>
@@ -33,9 +36,9 @@
 	</div>
 	<div class="board">
 		<ul class="list-inline">
-			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists">
+			<li class="taskList well well-sm" ng-repeat="taskList in vm.board.taskLists | orderBy: 'id'">
 				<h3>
-					<span class="pull-right">
+					<span class="btn-group pull-right">
 	        			<button type="button" class="btn btn-primary btn-sm" ui-sref="board-detail.list-edit({taskListId:taskList.id})" >
 	        				<span class="glyphicon glyphicon-pencil"></span>
 	        			</button>
@@ -46,7 +49,7 @@
 					<span>{{taskList.name}}</span>
 				</h3>
 				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="task in taskList.tasks">
+					<li class="list-group-item" ng-repeat="task in taskList.tasks | orderBy: 'id'">
 						<div>
 							<button ui-sref="board-detail.task-edit({taskListId: taskList.id, taskId: task.id})"
 								class="btn btn-primary btn-xs pull-right">

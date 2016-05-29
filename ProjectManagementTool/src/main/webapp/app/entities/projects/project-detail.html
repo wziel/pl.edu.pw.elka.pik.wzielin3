@@ -4,6 +4,11 @@
     </style>
 	<h2>
 		<span>Project</span> {{vm.project.name}}
+		<span class="btn-group pull-right">
+			<button type="submit" ui-sref="projects" class="btn btn-info btn-sm">
+				<span class="glyphicon glyphicon-arrow-left"></span>
+			</button>
+		</span>
 	</h2>
 
 	<div class="table-responsive">
@@ -41,13 +46,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="user in vm.project.users">
+			<tr ng-repeat="user in vm.project.users | orderBy: 'user'">
 				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{user}}</span></td>
                 <td class="text-right">
                     <button type="submit"
                             class="btn btn-danger btn-sm" ng-click="vm.deleteUser(user)">
                         <span class="glyphicon glyphicon-remove-circle"></span>
-                        <span class="hidden-xs hidden-sm"></span>&nbsp;Delete user</button>
+                        <span class="hidden-xs hidden-sm"></span></button>
                     </button>
                 </td>
 			</tr>
@@ -69,19 +74,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="board in vm.project.boards">
+			<tr ng-repeat="board in vm.project.boards | orderBy: 'name'">
 				<td><span style="height:100%; display:block; overflow:auto" class="text-info">{{board.name}}</span></td>
 				<td>
-					<div class="pull-right">
-						<button type="button" ui-sref="board-detail({boardId:{{board.id}}})"
-							class="btn btn-info btn-sm" style="float:right">
+					<span class="btn-group pull-right">
+						<button type="button" ui-sref="board-detail({boardId:{{board.id}}})" class="btn btn-info btn-sm">
 							<span class="glyphicon glyphicon-eye-open"></span>
 						</button>
-						<button type="button" ui-sref="board-edit({boardId: board.id})"
-							class="btn btn-primary btn-sm">
+						<button type="button" ui-sref="board-edit({boardId: board.id})" class="btn btn-primary btn-sm">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</button>
-					</div>
+					</span>
 				</td>
 			</tr>
 		</tbody>
@@ -91,11 +94,4 @@
         <label for="description">Description</label>
         <span style="height:100%; display:block; overflow:auto" class="text-info" id="description" >{{vm.project.description}}</span>
     </div>
-
-	<div>
-		<button type="submit" ui-sref="projects" class="btn btn-info">
-			<span class="glyphicon glyphicon-arrow-left"></span>&nbsp; <span>
-				Back </span>
-		</button>
-	</div>
 </div>
