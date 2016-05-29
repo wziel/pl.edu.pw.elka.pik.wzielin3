@@ -23,21 +23,6 @@
                 }
             }
         })
-        .state('project-detail', {
-            parent: 'projects',
-            url: '/{projectId}',
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'Project Details'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/projects/project-detail.html',
-                    controller: 'ProjectController',
-                    controllerAs: 'vm'
-                }
-            }
-        })
         .state('projects.new', {
             parent: 'projects',
             url: '/new',
@@ -64,6 +49,21 @@
                     $state.go('projects');
                 });
             }]
+        })
+        .state('project-detail', {
+            parent: 'projects',
+            url: '/{projectId}',
+            data: {
+                authorities: ['ROLE_USER'],
+                pageTitle: 'Project Details'
+            },
+            views: {
+                'content@': {
+                    templateUrl: 'app/entities/projects/project-detail.html',
+                    controller: 'ProjectController',
+                    controllerAs: 'vm'
+                }
+            }
         })
         .state('projects.edit', {
             parent: 'projects',
