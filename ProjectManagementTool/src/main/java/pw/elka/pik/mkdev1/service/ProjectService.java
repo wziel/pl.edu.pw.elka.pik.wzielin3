@@ -50,6 +50,7 @@ public class ProjectService {
         Project project = new Project();
         project.setName(projectDTO.getName());
         project.setDescription(projectDTO.getDescription());
+        project.setMembersCount(0L);
         project.addUser(user);
         projectRepository.save(project);
         log.debug("Created Information for project: {}", project);
