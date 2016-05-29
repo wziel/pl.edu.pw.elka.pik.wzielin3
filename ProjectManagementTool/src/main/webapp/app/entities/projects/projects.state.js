@@ -92,7 +92,7 @@
         })
             .state('projects.newUser', {
                 parent: 'project-detail',
-                url: '/adduser',
+                url: '/users/add',
                 data: {
                     authorities: ['ROLE_USER']
                 },
