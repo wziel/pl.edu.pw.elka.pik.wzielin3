@@ -48,7 +48,7 @@ public class Project implements Serializable {
     private Set<User> users = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
     		name="board_project",
     		joinColumns = {@JoinColumn(name = "project_id", nullable = false)},

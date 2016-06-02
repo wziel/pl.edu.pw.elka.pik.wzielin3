@@ -31,7 +31,7 @@ public class TaskList implements Serializable {
     private String name;
     
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "task_list_task",
         joinColumns = {@JoinColumn(name = "task_list_id", nullable = false)},
