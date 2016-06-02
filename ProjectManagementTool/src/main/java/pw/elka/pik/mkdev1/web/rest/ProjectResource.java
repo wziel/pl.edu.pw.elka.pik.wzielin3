@@ -74,6 +74,16 @@ public class ProjectResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(value = "/projects/{id}",
+        method = RequestMethod.DELETE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id){
+        log.debug("REST request to delete Project : {}", id);
+        projectService.deleteProject(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "A project " + id + " deleted", id.toString())).build();
+    }
+
     @RequestMapping(value = "/projects",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)

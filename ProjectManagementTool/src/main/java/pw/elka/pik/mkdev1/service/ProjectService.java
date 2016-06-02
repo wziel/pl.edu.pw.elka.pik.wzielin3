@@ -56,6 +56,10 @@ public class ProjectService {
         log.debug("Created Information for project: {}", project);
     }
 
+    public void deleteProject(Long id) {
+        projectRepository.delete(id);
+    }
+
     public ResponseEntity<ProjectDTO> modifyProject(ProjectDTO projectDTO) {
         return projectRepository.findOneById(projectDTO.getId())
             .map(project -> {
