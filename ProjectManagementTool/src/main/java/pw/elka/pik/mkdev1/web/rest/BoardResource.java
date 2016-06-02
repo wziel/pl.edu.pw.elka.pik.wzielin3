@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class BoardResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> createBoard(@RequestBody BoardDTO boardDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createBoard(@Validated(BoardDTO.CreateChecks.class) @RequestBody BoardDTO boardDTO, HttpServletRequest request) throws URISyntaxException {
         boardService.create(boardDTO);
         return new ResponseEntity<>(boardDTO, HttpStatus.OK);
     }
@@ -69,7 +70,7 @@ public class BoardResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> updateBoard(@RequestBody BoardDTO boardDTO) {
+    public ResponseEntity<?> updateBoard(@Validated(BoardDTO.UpdateChecks.class) @RequestBody BoardDTO boardDTO) {
     	if(boardService.exists(boardDTO.getId())) {
     		boardService.update(boardDTO);
         	return new ResponseEntity<>(boardDTO, HttpStatus.OK);

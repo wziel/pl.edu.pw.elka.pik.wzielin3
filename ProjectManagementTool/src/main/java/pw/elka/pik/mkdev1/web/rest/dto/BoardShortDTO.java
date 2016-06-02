@@ -4,14 +4,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import pw.elka.pik.mkdev1.domain.Board;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskDTO.CreateChecks;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskDTO.UpdateChecks;
 
 public class BoardShortDTO {
+	
+	public interface CreateChecks {
+	}
 
-	@NotNull
-    @Size(min = 1, max = 50)
+	public interface UpdateChecks {
+	}
+
+	@NotNull(groups = {UpdateChecks.class, CreateChecks.class})
+    @Size(min = 1, max = 50,groups = {UpdateChecks.class, CreateChecks.class})
     private String name;
 	
-	@NotNull
+	@NotNull(groups = {UpdateChecks.class})
     private Long id;
     
 	public BoardShortDTO(Board board) {

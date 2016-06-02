@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -58,7 +59,7 @@ public class TaskListResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> createTaskList(@Valid @RequestBody TaskListDTO taskListDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createTaskList(@Validated(TaskListDTO.CreateChecks.class) @RequestBody TaskListDTO taskListDTO, HttpServletRequest request) throws URISyntaxException {
         taskListService.create(taskListDTO);
         return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
     }
@@ -68,7 +69,7 @@ public class TaskListResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> updateTaskList(@RequestBody TaskListDTO taskListDTO) {
+    public ResponseEntity<?> updateTaskList(@Validated(TaskListDTO.UpdateChecks.class)@RequestBody TaskListDTO taskListDTO) {
     	if(taskListService.exists(taskListDTO.getId())) {
     		taskListService.update(taskListDTO);
         	return new ResponseEntity<>(taskListDTO, HttpStatus.OK);

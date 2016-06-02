@@ -13,11 +13,18 @@ import java.util.stream.Collectors;
 
 public class TaskDTO {
 
-	@NotNull
+	
+	public interface CreateChecks {
+	}
+
+	public interface UpdateChecks {
+	}
+	
+	@NotNull(groups = {UpdateChecks.class})
 	private Long id;
 		
-	@NotNull
-    @Size(min = 1, max = 50)
+	@NotNull(groups = {UpdateChecks.class, CreateChecks.class})
+    @Size(min = 1, max = 50, groups = {UpdateChecks.class, CreateChecks.class})
     private String name;
 	
 	private Long taskListId;

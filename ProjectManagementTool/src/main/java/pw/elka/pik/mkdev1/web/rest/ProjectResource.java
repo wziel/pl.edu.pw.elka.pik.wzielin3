@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -77,7 +78,7 @@ public class ProjectResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> createProject(@Valid @RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createProject(@Validated(ProjectDTO.CreateChecks.class) @RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save Project : {}", projectDTO);
         if (projectService.exists(projectDTO.getId())) {
             return ResponseEntity.badRequest()
@@ -97,7 +98,7 @@ public class ProjectResource {
         consumes = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<ProjectDTO> updateProject(@RequestBody ProjectDTO projectDTO) {
+    public ResponseEntity<ProjectDTO> updateProject(@Validated(ProjectDTO.UpdateChecks.class)@RequestBody ProjectDTO projectDTO) {
         log.debug("REST request to update Project : {}", projectDTO);
         return projectService.modifyProject(projectDTO);
     }

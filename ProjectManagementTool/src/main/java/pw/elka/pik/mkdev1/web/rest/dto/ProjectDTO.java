@@ -3,6 +3,8 @@ package pw.elka.pik.mkdev1.web.rest.dto;
 import pw.elka.pik.mkdev1.domain.Board;
 import pw.elka.pik.mkdev1.domain.Project;
 import pw.elka.pik.mkdev1.domain.User;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskDTO.CreateChecks;
+import pw.elka.pik.mkdev1.web.rest.dto.TaskDTO.UpdateChecks;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -14,12 +16,19 @@ import java.util.stream.Collectors;
 
 public class ProjectDTO {
 
-    @NotNull
-    @Size(min = 1, max = 50)
+	public interface CreateChecks {
+	}
+
+	public interface UpdateChecks {
+	}
+	
+    @NotNull(groups = {UpdateChecks.class, CreateChecks.class})
+    @Size(min = 1, max = 50,groups = {UpdateChecks.class, CreateChecks.class})
     private String name;
 
     private Long membersCount;
     
+    @NotNull(groups = {UpdateChecks.class})
     private Long id;
 
     private Set<String> users;

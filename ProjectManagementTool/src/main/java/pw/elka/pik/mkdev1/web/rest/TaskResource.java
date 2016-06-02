@@ -26,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class TaskResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createTask(@Validated(TaskDTO.CreateChecks.class)  @RequestBody TaskDTO taskDTO, HttpServletRequest request) throws URISyntaxException {
     	taskService.create(taskDTO);
         return new ResponseEntity<>(taskDTO, HttpStatus.OK);
     }
@@ -69,7 +70,7 @@ public class TaskResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> updateTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<?> updateTask(@Validated(TaskDTO.UpdateChecks.class) @RequestBody TaskDTO taskDTO) {
     	if(taskService.exists(taskDTO.getId())) {
     		taskService.update(taskDTO);
         	return new ResponseEntity<>(taskDTO, HttpStatus.OK);
