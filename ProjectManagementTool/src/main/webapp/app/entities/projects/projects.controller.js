@@ -5,15 +5,16 @@
         .module('projectManagementToolApp')
         .controller('ProjectsController', ProjectsController);
 
-    ProjectsController.$inject = ['Project', 'paginationConstants'];
+    ProjectsController.$inject = ['$state', 'Project', 'paginationConstants'];
 
-    function ProjectsController (Project, paginationConstants) {
+    function ProjectsController ($state, Project, paginationConstants) {
         var vm = this;
 
         vm.loadAll = loadAll;
         vm.loadPage = loadPage;
         vm.page = 1;
         vm.projects = [];
+        vm.deleteProject = deleteProject;
 
         vm.loadAll();
 
@@ -27,6 +28,13 @@
             vm.page = page;
             vm.loadAll();
         }
-        
+
+        function deleteProject(project) {
+            Project.delete({projectId: project.id},
+                function () {
+                    $state.reload();
+                });
+        }
+
     }
 })();
