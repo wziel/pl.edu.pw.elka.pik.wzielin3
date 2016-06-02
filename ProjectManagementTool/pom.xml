@@ -611,7 +611,7 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:7002/ProjectManagementTool</url>
+                    <url>jdbc:mysql://localhost:3306/ProjectManagementTool</url>
                     <defaultSchemaName>ProjectManagementTool</defaultSchemaName>
                     <username>mkdev1</username>
                     <password>mkdev!@#90</password>
