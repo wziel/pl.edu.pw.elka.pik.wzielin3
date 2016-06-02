@@ -31,6 +31,8 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,7 +58,7 @@ public class TaskListResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> createTaskList(@RequestBody TaskListDTO taskListDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createTaskList(@Valid @RequestBody TaskListDTO taskListDTO, HttpServletRequest request) throws URISyntaxException {
         taskListService.create(taskListDTO);
         return new ResponseEntity<>(taskListDTO, HttpStatus.OK);
     }

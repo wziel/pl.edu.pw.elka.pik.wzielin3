@@ -27,6 +27,8 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,7 +77,7 @@ public class ProjectResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> createProject(@RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<?> createProject(@Valid @RequestBody ProjectDTO projectDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save Project : {}", projectDTO);
         if (projectService.exists(projectDTO.getId())) {
             return ResponseEntity.badRequest()

@@ -29,6 +29,8 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +47,7 @@ public class BoardResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
         @Timed
-        public ResponseEntity<BoardDTO> getBoard(@PathVariable Long boardId){
+        public ResponseEntity<BoardDTO> getBoard(@Valid @PathVariable Long boardId){
             log.debug("REST request to get Board : {}", boardId);
             return boardService.getDetailsById(boardId)
                 .map(boardDTO -> new ResponseEntity<>(boardDTO, HttpStatus.OK))
