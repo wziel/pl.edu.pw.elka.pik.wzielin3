@@ -8,9 +8,9 @@
     stateConfig.$inject = ['$stateProvider'];
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('board-detail.edit', {
-            parent: 'board-detail',
-            url: '/edit',
+        $stateProvider.state('board-edit', {
+            parent: 'project-detail',
+            url: '/boards/:boardId/edit',
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
                     templateUrl: 'app/entities/boards/board-edit.html',
@@ -24,9 +24,9 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('board-detail', null, { reload: true });
+                    $state.go('project-detail', null, { reload: true });
                 }, function() {
-                    $state.go('board-detail');
+                    $state.go('project-detail');
                 });
             }]
         }).state('board-new', {
@@ -47,27 +47,6 @@
                             	projectId: $stateParams.projectId
                             };
                         }
-                    }
-                }).result.then(function() {
-                    $state.go('project-detail', null, { reload: true });
-                }, function() {
-                    $state.go('project-detail');
-                });
-            }]
-        }).state('board-edit', {
-            parent: 'project-detail',
-            url: '/boards/:boardId/edit',
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/boards/board-edit.html',
-                    controller: 'BoardEditController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: [ 'Board', function(Board) {
-                            return Board.get({boardId : $stateParams.boardId});
-                        }]
                     }
                 }).result.then(function() {
                     $state.go('project-detail', null, { reload: true });
