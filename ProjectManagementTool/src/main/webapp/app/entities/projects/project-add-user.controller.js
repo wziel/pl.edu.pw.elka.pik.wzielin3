@@ -21,8 +21,6 @@
         vm.users = [];
         vm.loadAll = loadAll;
         vm.userLogin = "";
-        vm.invalidUser = false;
-        vm.userAlreadyBelong = false;
 
         vm.loadAll();
 
@@ -47,15 +45,6 @@
 
         function addUser () {
             vm.isSaving = true;
-            vm.invalidUser = false;
-            vm.userAlreadyBelong = false;
-            for(var i=0; i<vm.project.users.length; i++){
-                if(vm.project.users[i] == vm.userLogin){
-                    onSaveError();
-                    vm.userAlreadyBelong = true;
-                    return;
-                }
-            }
             for(var i =0; i<vm.users.length; i++){
                 if(vm.users[i].login == vm.userLogin) {
                     ProjectMember.save({projectId: vm.project.id, login: vm.userLogin}, onSaveSuccess, onSaveError);
@@ -63,7 +52,6 @@
                 }
             }
             onSaveError();
-            vm.invalidUser = true;
         }
     }
 })();

@@ -10,33 +10,12 @@
 
         <div class="form-group">
             <label class="control-label">Name</label>
-            <input type="text" class="form-control" name="name"
-                   ng-model="vm.userLogin" ng-required="true" ng-maxlength="50">
-
-            <div ng-show="createForm.name.$invalid || vm.invalidUser || vm.userAlreadyBelong">
-                <p class="help-block"
-                   ng-show="createForm.name.$error.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                   ng-show="createForm.name.$error.maxlength"
-                >
-                    This field cannot be longer than 50 characters.
-                </p>
-
-                <p class="text-warning"
-                   ng-show="vm.invalidUser"
-                >
-                    There is no such user in database.
-                </p>
-
-                <p class="text-warning"
-                   ng-show="vm.userAlreadyBelong"
-                >
-                    This user already belong to this project.
-                </p>
-            </div>
+            <input type="text" class="form-control" name="name" ng-model="vm.userLogin" 
+            	ng-required="true" ng-maxlength="50" usernotinproject userexists>
+            <p class="help-block" ng-show="addUserForm.name.$error.required"> This field is required. </p>
+            <p class="help-block" ng-show="addUserForm.name.$error.maxlength"> This field cannot be longer than 50 characters. </p>
+            <p class="help-block" ng-show="addUserForm.name.$error.userexists" > There is no such user in database. </p>
+            <p class="help-block" ng-show="addUserForm.name.$error.usernotinproject"> This user already belong to this project. </p>
         </div>
 
     </div>
@@ -45,7 +24,7 @@
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
         >Cancel</span>
         </button>
-        <button type="submit" ng-disabled="createForm.$invalid || isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="addUserForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Add</span>
         </button>
     </div>
