@@ -205,6 +205,12 @@
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
+            <artifactId>springfox-staticdocs</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox.version}</version>
             <exclusions>
@@ -355,6 +361,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-spring-service-connector</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <version>1.0.1.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
         <!-- security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -478,6 +490,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>io.github.robwin</groupId>
+                <artifactId>swagger2markup-maven-plugin</artifactId>
+                <version>0.9.3</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/target/docs/asciidoc</outputDirectory>
+                    <inputDirectory>${project.basedir}/target/swagger</inputDirectory>
+                    <pathsGroupedBy>TAGS</pathsGroupedBy>
+                    <examplesDirectory>${project.basedir}/target/asciidoc</examplesDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <configuration>
@@ -517,6 +540,46 @@
                     <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m ${surefireArgLine}</argLine>
                     <!-- Force alphabetical order to have a reproducible build -->
                     <runOrder>alphabetical</runOrder>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <id>output-html</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <outputDirectory>${project.basedir}/target/asciidoc/html5</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>1.5.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>1.5.0-alpha.11</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/docs/asciidoc</sourceDirectory>
+                    <sourceDocumentName>index.adoc</sourceDocumentName>
+                    <attributes>
+                        <doctype>book</doctype>
+                        <toc>left</toc>
+                        <toclevels>3</toclevels>
+                        <generated>${project.basedir}/target/docs/asciidoc</generated>
+                    </attributes>
                 </configuration>
             </plugin>
             <plugin>
