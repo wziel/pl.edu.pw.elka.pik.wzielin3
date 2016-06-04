@@ -1,0 +1,88 @@
+[source,http]
+----
+HTTP/1.1 200 OK
+X-Total-Count: 6
+Link: </api/users?page=0&size=20>; rel="last",</api/users?page=0&size=20>; rel="first"
+Content-Type: application/json
+Content-Length: 2084
+
+[ {
+  "login" : "system",
+  "password" : null,
+  "firstName" : "System",
+  "lastName" : "System",
+  "email" : "system@localhost",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ "ROLE_USER", "ROLE_ADMIN" ],
+  "id" : 1,
+  "createdDate" : "2016-05-28T14:03:57.000Z",
+  "lastModifiedBy" : null,
+  "lastModifiedDate" : null
+}, {
+  "login" : "anonymousUser",
+  "password" : null,
+  "firstName" : "Anonymous",
+  "lastName" : "User",
+  "email" : "anonymous@localhost",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ ],
+  "id" : 2,
+  "createdDate" : "2016-05-28T14:03:57.000Z",
+  "lastModifiedBy" : null,
+  "lastModifiedDate" : null
+}, {
+  "login" : "admin",
+  "password" : null,
+  "firstName" : "Administrator",
+  "lastName" : "Administrator",
+  "email" : "admin@localhost",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ "ROLE_USER", "ROLE_ADMIN" ],
+  "id" : 3,
+  "createdDate" : "2016-05-28T14:03:57.000Z",
+  "lastModifiedBy" : null,
+  "lastModifiedDate" : null
+}, {
+  "login" : "user",
+  "password" : null,
+  "firstName" : "User",
+  "lastName" : "User",
+  "email" : "user@localhost",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ "ROLE_USER" ],
+  "id" : 4,
+  "createdDate" : "2016-05-28T14:03:57.000Z",
+  "lastModifiedBy" : null,
+  "lastModifiedDate" : null
+}, {
+  "login" : "testuser",
+  "password" : null,
+  "firstName" : null,
+  "lastName" : null,
+  "email" : "testmail@testmail.com",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ "ROLE_USER" ],
+  "id" : 5,
+  "createdDate" : "2016-05-28T23:36:56.000Z",
+  "lastModifiedBy" : "admin",
+  "lastModifiedDate" : "2016-05-28T23:37:14.000Z"
+}, {
+  "login" : "newuser5",
+  "password" : null,
+  "firstName" : null,
+  "lastName" : null,
+  "email" : "newuser5@newuser5.pl",
+  "activated" : true,
+  "langKey" : "en",
+  "authorities" : [ "ROLE_USER" ],
+  "id" : 6,
+  "createdDate" : "2016-06-03T10:18:49.000Z",
+  "lastModifiedBy" : "admin",
+  "lastModifiedDate" : "2016-06-03T10:19:01.000Z"
+} ]
+----
